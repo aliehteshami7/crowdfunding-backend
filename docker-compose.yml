@@ -1,4 +1,4 @@
-version: "3.7"
+version: '3.7'
 
 services:
   api:
@@ -12,16 +12,17 @@ services:
       - 3000:3000
     command: yarn start:dev
     depends_on:
-      - postgres
+      - mongodb
     env_file:
       - ./.env
 
-  postgres:
-    image: postgres:13.3-alpine
+  mongodb:
+    image: mongo:4.4.6
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - mongo_data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     env_file:
       - ./.env.db
 
 volumes:
-  postgres_data:
+  mongo_data:
