@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Controller,
   Get,
   NotFoundException,
@@ -49,6 +50,9 @@ export class MediaController {
     }),
   )
   uploadFile(@UploadedFile() file: Express.Multer.File): UploadImageRo {
+    if (!file) {
+      throw new BadRequestException('File not found!');
+    }
     const fileName = file.filename.replace(/_([^_]*)$/, '.$1');
     return plainToClass(UploadImageRo, {
       path: 'image/' + fileName,
