@@ -37,3 +37,6 @@ lerna-debug.log*
 .env
 .env.db
 mongo-init.js
+
+# Uploaded files
+/uploaded_images

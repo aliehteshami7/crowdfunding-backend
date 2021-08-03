@@ -4,6 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { configService } from './config.service';
 import { RolesModule } from './roles/roles.module';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -11,6 +12,7 @@ import { RolesModule } from './roles/roles.module';
     UsersModule,
     AuthModule,
     RolesModule,
+    MediaModule,
   ],
 })
 export class AppModule {}

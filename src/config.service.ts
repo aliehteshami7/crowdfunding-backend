@@ -4,7 +4,7 @@ dotenv.config();
 class ConfigService {
   constructor(private env: { [k: string]: string | undefined }) {}
 
-  private getValue(key: string, throwOnMissing = true): string {
+  public getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
     if (!value && throwOnMissing) {
       throw new Error(`config error - missing env.${key}`);
@@ -52,6 +52,7 @@ const configService = new ConfigService(process.env).ensureValues([
   'JWT_EXPIRE_IN',
   'SUPERUSER_USERNAME',
   'SUPERUSER_PASSWORD',
+  'IMAGE_PATH',
 ]);
 
 export { configService };
