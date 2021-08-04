@@ -53,6 +53,7 @@ const configService = new ConfigService(process.env).ensureValues([
   'SUPERUSER_USERNAME',
   'SUPERUSER_PASSWORD',
   'IMAGE_PATH',
+  'AVATAR_PATH',
 ]);
 
 export { configService };
