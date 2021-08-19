@@ -67,6 +67,10 @@ export class UsersService {
     };
   }
 
+  async findUserByUsername(username: string): Promise<User> {
+    return await this.userModel.findOne({ username }).populate('roles');
+  }
+
   async suspend(usernameDto: UsernameDto): Promise<void> {
     const user = await this.userModel.findOneAndUpdate(usernameDto, {
       isActive: false,
@@ -105,7 +109,7 @@ export class UsersService {
     if (!isValid) {
       throw new UnauthorizedException();
     }
-    console.log(plainToClass(UserRo, user, { excludeExtraneousValues: true }));
+
     return plainToClass(UserRo, user, { excludeExtraneousValues: true });
   }
 }
