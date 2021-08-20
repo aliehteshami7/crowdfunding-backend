@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
-import { IsEmail, IsString, Matches } from 'class-validator';
+import { IsEmail, IsString, Matches, ValidateNested } from 'class-validator';
 import { UserRoleRo } from './user-role.ro';
 
 export class UserRo {
@@ -27,6 +27,7 @@ export class UserRo {
   @ApiProperty()
   public readonly email: string;
 
+  @ValidateNested({ each: true })
   @Type(() => UserRoleRo)
   @Expose()
   @ApiProperty()
