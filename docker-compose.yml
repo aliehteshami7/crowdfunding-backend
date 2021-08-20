@@ -9,7 +9,7 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - 30068:3000
+      - 3000:3000
     command: yarn start:dev
     depends_on:
       - mongodb
