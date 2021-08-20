@@ -17,6 +17,11 @@ export class RoleDto {
   @ArrayUnique()
   @IsArray()
   @IsEnum(PermissionTag, { each: true })
-  @ApiProperty()
+  @ApiProperty({
+    type: 'array',
+    items: {
+      enum: Object.keys(PermissionTag),
+    },
+  })
   public readonly permissions: PermissionTag[];
 }

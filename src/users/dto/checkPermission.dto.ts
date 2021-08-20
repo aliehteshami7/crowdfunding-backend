@@ -11,6 +11,11 @@ export class CheckPermissionDto {
 
   @IsNotEmpty()
   @IsEnum(PermissionTag, { each: true })
-  @ApiProperty()
+  @ApiProperty({
+    type: 'array',
+    items: {
+      enum: Object.keys(PermissionTag),
+    },
+  })
   public permissions: PermissionTag[];
 }

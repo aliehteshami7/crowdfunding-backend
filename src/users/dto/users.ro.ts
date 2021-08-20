@@ -7,6 +7,6 @@ export class UsersRo {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => UserRo)
-  @ApiProperty()
+  @ApiProperty({ type: [UserRo] })
   public readonly users: UserRo[];
 }

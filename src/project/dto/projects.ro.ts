@@ -7,7 +7,7 @@ export class ProjectsRo {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => ProjectRo)
-  @ApiProperty()
+  @ApiProperty({ type: [ProjectRo] })
   @Expose()
   public projects: ProjectRo[];
 }

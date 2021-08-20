@@ -15,14 +15,21 @@ export class UpdateRoleDto {
   @Expose({ name: '_id' })
   @Expose({ name: 'id' })
   @Type(() => String)
+  @ApiProperty()
   public readonly id: string;
 
   @IsString()
+  @ApiProperty()
   public readonly name: string;
 
   @ArrayUnique()
   @IsArray()
   @IsEnum(PermissionTag, { each: true })
-  @ApiProperty()
+  @ApiProperty({
+    type: 'array',
+    items: {
+      enum: Object.keys(PermissionTag),
+    },
+  })
   public readonly permissions: PermissionTag[];
 }

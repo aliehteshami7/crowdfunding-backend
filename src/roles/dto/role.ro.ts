@@ -19,7 +19,12 @@ export class RoleRo {
   @ArrayUnique()
   @IsArray()
   @IsEnum(PermissionTag, { each: true })
-  @ApiProperty()
+  @ApiProperty({
+    type: 'array',
+    items: {
+      enum: Object.keys(PermissionTag),
+    },
+  })
   @Expose()
   public permissions: PermissionTag[];
 }

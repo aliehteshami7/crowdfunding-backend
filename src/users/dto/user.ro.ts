@@ -30,6 +30,6 @@ export class UserRo {
   @ValidateNested({ each: true })
   @Type(() => UserRoleRo)
   @Expose()
-  @ApiProperty()
+  @ApiProperty({ type: [UserRoleRo] })
   public readonly roles: UserRoleRo[];
 }
