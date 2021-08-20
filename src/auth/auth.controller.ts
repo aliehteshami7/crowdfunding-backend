@@ -22,6 +22,7 @@ export class AuthController {
   constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
   @Post()
+  @HttpCode(200)
   @ApiBody({ type: LoginDto })
   @UseGuards(LocalAuthGuard)
   async login(@Request() { user }: { user: UserRo }): Promise<LoginRo> {
