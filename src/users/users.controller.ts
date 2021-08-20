@@ -16,7 +16,13 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserRoleDto } from './dto/user-role.dto';
 import { UserRolesService } from './user-roles.service';
 import { CheckPermissionDto } from './dto/checkPermission.dto';
@@ -35,6 +41,7 @@ export class UsersController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
+  @ApiCreatedResponse({ type: UserRo })
   async create(@Body() userCreateDto: UserCreateDto): Promise<UserRo> {
     return await this.userService.create(userCreateDto);
   }
@@ -51,6 +58,7 @@ export class UsersController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Search users' })
+  @ApiOkResponse({ type: UsersRo })
   async find(@Query() userFindDto: UserFindDto): Promise<UsersRo> {
     return await this.userService.find(userFindDto);
   }

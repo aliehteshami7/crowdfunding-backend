@@ -19,7 +19,7 @@ import { getDiskStorage } from './disk-storage';
 import { UploadImageRo } from './dto/upload-image.ro';
 import { FileType, getFilter } from './file-type-filter';
 import 'multer';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import * as fs from 'fs';
 
 const appDir = join(dirname(require.main.filename), '..');
@@ -43,6 +43,7 @@ export class MediaController {
 
   @Post('image/upload')
   @ApiOperation({ summary: 'Upload image' })
+  @ApiCreatedResponse({ type: UploadImageRo })
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: getFilter(FileType.IMAGE),
@@ -76,6 +77,7 @@ export class MediaController {
 
   @Post('avatar/upload')
   @ApiOperation({ summary: 'Upload avatar' })
+  @ApiCreatedResponse({ type: UploadImageRo })
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: getFilter(FileType.IMAGE),

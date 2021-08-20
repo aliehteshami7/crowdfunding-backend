@@ -13,7 +13,7 @@ import { LoginRo } from './dto/login.ro';
 import { TokenDto } from './dto/token.dto';
 import { UserRo } from 'src/users/dto/user.ro';
 import { TokenRo } from './dto/token.ro';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
 
 @ApiTags('Auth')
@@ -26,6 +26,7 @@ export class AuthController {
   @ApiBody({ type: LoginDto })
   @UseGuards(LocalAuthGuard)
   @ApiOperation({ summary: 'Login' })
+  @ApiOkResponse({ type: UserRo })
   async login(@Request() { user }: { user: UserRo }): Promise<LoginRo> {
     return await this.authService.login(user);
   }
@@ -33,6 +34,7 @@ export class AuthController {
   @Post('verifyToken')
   @HttpCode(200)
   @ApiOperation({ summary: 'Verify Token' })
+  @ApiOkResponse({ type: TokenRo })
   async verify(@Body() tokenDto: TokenDto): Promise<TokenRo> {
     return await this.authService.validateToken(tokenDto);
   }

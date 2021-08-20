@@ -7,7 +7,7 @@ export class RolesRo {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => RoleRo)
-  @ApiProperty()
+  @ApiProperty({ type: [RoleRo] })
   @Expose()
   public roles: RoleRo[];
 }

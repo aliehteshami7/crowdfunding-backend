@@ -15,6 +15,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { PermissionTag } from './enum/permission-tag.enum';
 import { PermissionViewRo } from './dto/permission-view.ro';
 import { permissionsView } from './enum/permission-tag.enum';
+import { ObjectID } from 'mongodb';
 
 @Injectable()
 export class RolesService {
@@ -54,8 +55,11 @@ export class RolesService {
     }
   }
 
-  async readRole(roleIdDto: RoleIdDto): Promise<RoleRo> {
-    const role = await this.rolesModel.findOne({ _id: roleIdDto.id });
+  async readRole(roleId: string): Promise<RoleRo> {
+    if (!ObjectID.isValid(roleId)) {
+      throw new NotFoundException();
+    }
+    const role = await this.rolesModel.findOne({ _id: roleId });
     if (!role) {
       throw new NotFoundException();
     }
