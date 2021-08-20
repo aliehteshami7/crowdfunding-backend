@@ -9,7 +9,7 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { User } from 'src/users/schemas/user.schema';
@@ -30,6 +30,7 @@ export class ProjectController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Create a new project' })
   async create(
     @Body() projectCreateDto: ProjectCreateDto,
     @CurrentUser() currentUser: User,
@@ -38,11 +39,13 @@ export class ProjectController {
   }
 
   @Get(':projectId')
+  @ApiOperation({ summary: 'Get project by project id' })
   async get(@Param('projectId') projectId: string): Promise<ProjectRo> {
     return await this.projectService.read(projectId);
   }
 
   @Get()
+  @ApiOperation({ summary: 'Get all projects' })
   async find(): Promise<ProjectsRo> {
     return await this.projectService.find();
   }
@@ -50,6 +53,7 @@ export class ProjectController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Put(':projectId')
+  @ApiOperation({ summary: 'Update information of an existing project' })
   async update(
     @Param('projectId') projectId: string,
     @Body() projectUpdateDto: ProjectUpdateDto,
@@ -60,6 +64,7 @@ export class ProjectController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Delete(':projectId')
+  @ApiOperation({ summary: 'Delete a project by its id' })
   async delete(@Param('projectId') projectId: string): Promise<void> {
     await this.projectService.delete(projectId);
   }

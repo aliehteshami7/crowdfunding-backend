@@ -19,7 +19,7 @@ import { getDiskStorage } from './disk-storage';
 import { UploadImageRo } from './dto/upload-image.ro';
 import { FileType, getFilter } from './file-type-filter';
 import 'multer';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import * as fs from 'fs';
 
 const appDir = join(dirname(require.main.filename), '..');
@@ -30,6 +30,7 @@ const avatarPath = join(appDir, configService.getValue('AVATAR_PATH'));
 @Controller('media')
 export class MediaController {
   @Get('image/:imageName')
+  @ApiOperation({ summary: 'Get image by name' })
   getImage(@Param('imageName') imageName: string, @Res() res: Response) {
     const fileName = imageName.replace(/.([^.]*)$/, '_$1');
     const filePath = join(imagePath, fileName);
@@ -41,6 +42,7 @@ export class MediaController {
   }
 
   @Post('image/upload')
+  @ApiOperation({ summary: 'Upload image' })
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: getFilter(FileType.IMAGE),
@@ -61,6 +63,7 @@ export class MediaController {
   }
 
   @Get('avatar/:avatarName')
+  @ApiOperation({ summary: 'Get avatar by name' })
   getAvatar(@Param('avatarName') avatarName: string, @Res() res: Response) {
     const fileName = avatarName.replace(/.([^.]*)$/, '_$1');
     const filePath = join(avatarPath, fileName);
@@ -72,6 +75,7 @@ export class MediaController {
   }
 
   @Post('avatar/upload')
+  @ApiOperation({ summary: 'Upload avatar' })
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: getFilter(FileType.IMAGE),

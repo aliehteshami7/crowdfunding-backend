@@ -16,7 +16,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserRoleDto } from './dto/user-role.dto';
 import { UserRolesService } from './user-roles.service';
 import { CheckPermissionDto } from './dto/checkPermission.dto';
@@ -34,6 +34,7 @@ export class UsersController {
   ) {}
 
   @Post()
+  @ApiOperation({ summary: 'Create a new user' })
   async create(@Body() userCreateDto: UserCreateDto): Promise<UserRo> {
     return await this.userService.create(userCreateDto);
   }
@@ -41,6 +42,7 @@ export class UsersController {
   @Put()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Upadate infomation of an existing user' })
   async update(@Body() userUpdateDto: UserUpdateDto): Promise<void> {
     return await this.userService.update(userUpdateDto);
   }
@@ -48,6 +50,7 @@ export class UsersController {
   @Get()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Search users' })
   async find(@Query() userFindDto: UserFindDto): Promise<UsersRo> {
     return await this.userService.find(userFindDto);
   }
@@ -56,6 +59,7 @@ export class UsersController {
   @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Suspend an user by username' })
   async suspend(@Body() usernameDto: UsernameDto): Promise<void> {
     return await this.userService.suspend(usernameDto);
   }
@@ -64,6 +68,7 @@ export class UsersController {
   @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Activate an user by username' })
   async activate(@Body() usernameDto: UsernameDto): Promise<void> {
     return await this.userService.activate(usernameDto);
   }
@@ -71,6 +76,7 @@ export class UsersController {
   @Post('role')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Assign roles to an user' })
   async assignRole(@Body() userRoleDto: UserRoleDto): Promise<void> {
     return await this.userRolesService.assignRole(userRoleDto);
   }
@@ -79,6 +85,7 @@ export class UsersController {
   @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Check permissions of an user' })
   async checkPermission(
     @Body() checkPermissionDto: CheckPermissionDto,
   ): Promise<void> {
