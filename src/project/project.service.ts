@@ -38,7 +38,9 @@ export class ProjectService {
     if (!ObjectID.isValid(projectId)) {
       throw new NotFoundException();
     }
-    const project = await this.projectModel.findOne({ _id: projectId });
+    const project = await this.projectModel
+      .findOne({ _id: projectId })
+      .populate('owner');
     if (!project) {
       throw new NotFoundException();
     }
@@ -46,7 +48,7 @@ export class ProjectService {
   }
 
   async find(): Promise<ProjectsRo> {
-    const projects = await this.projectModel.find();
+    const projects = await this.projectModel.find().populate('owner');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -61,10 +63,9 @@ export class ProjectService {
     if (!ObjectID.isValid(projectId)) {
       throw new NotFoundException();
     }
-    const project = await this.projectModel.findOneAndUpdate(
-      { _id: projectId },
-      projectUpdateDto,
-    );
+    const project = await this.projectModel
+      .findOneAndUpdate({ _id: projectId }, projectUpdateDto)
+      .populate('owner');
     if (!project) {
       throw new NotFoundException();
     }
