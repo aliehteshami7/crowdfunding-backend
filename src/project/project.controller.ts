@@ -23,6 +23,7 @@ import { ProjectCreateDto } from './dto/project-create.dto';
 import { ProjectUpdateDto } from './dto/project-update.dto';
 import { ProjectRo } from './dto/project.ro';
 import { ProjectsRo } from './dto/projects.ro';
+import { RewardDto } from './dto/reward.dto';
 import { ProjectService } from './project.service';
 
 @ApiTags('Project')
@@ -77,5 +78,16 @@ export class ProjectController {
   @ApiOperation({ summary: 'Delete a project by its id' })
   async delete(@Param('projectId') projectId: string): Promise<void> {
     await this.projectService.delete(projectId);
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Post(':projectId/addReward')
+  @ApiOperation({ summary: 'Add a reward to a project' })
+  async addReward(
+    @Param('projectId') projectId: string,
+    @Body() rewardDto: RewardDto,
+  ): Promise<ProjectRo> {
+    return await this.projectService.addReward(projectId, rewardDto);
   }
 }

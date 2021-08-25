@@ -9,12 +9,16 @@ import { ProjectRo } from './dto/project.ro';
 import { ProjectsRo } from './dto/projects.ro';
 import { Project } from './schemas/project.schema';
 import { ObjectID } from 'mongodb';
+import { RewardDto } from './dto/reward.dto';
+import { Reward } from './schemas/reward.schema';
 
 @Injectable()
 export class ProjectService {
   constructor(
     @InjectModel(Project.name)
     private projectModel: Model<Project>,
+    @InjectModel(Reward.name)
+    private rewardModel: Model<Reward>,
   ) {}
 
   async create(
@@ -23,7 +27,6 @@ export class ProjectService {
   ): Promise<ProjectRo> {
     try {
       const projectValue = { ...projectCreateDto, owner: creator };
-      console.log(projectValue);
       const project = await this.projectModel.create(projectValue);
       return plainToClass(ProjectRo, await project.save(), {
         excludeExtraneousValues: true,
@@ -40,7 +43,8 @@ export class ProjectService {
     }
     const project = await this.projectModel
       .findOne({ _id: projectId })
-      .populate('owner');
+      .populate('owner')
+      .populate('rewards');
     if (!project) {
       throw new NotFoundException();
     }
@@ -48,7 +52,10 @@ export class ProjectService {
   }
 
   async find(): Promise<ProjectsRo> {
-    const projects = await this.projectModel.find().populate('owner');
+    const projects = await this.projectModel
+      .find()
+      .populate('owner')
+      .populate('rewards');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -65,7 +72,8 @@ export class ProjectService {
     }
     const project = await this.projectModel
       .findOneAndUpdate({ _id: projectId }, projectUpdateDto)
-      .populate('owner');
+      .populate('owner')
+      .populate('rewards');
     if (!project) {
       throw new NotFoundException();
     }
@@ -82,5 +90,32 @@ export class ProjectService {
     if (!del.deletedCount) {
       throw new NotFoundException();
     }
+  }
+
+  async addReward(projectId: string, rewardDto: RewardDto): Promise<ProjectRo> {
+    if (!ObjectID.isValid(projectId)) {
+      throw new NotFoundException();
+    }
+    const reward = await this.rewardModel.create(rewardDto);
+    let project = await this.projectModel.findOneAndUpdate(
+      { _id: projectId },
+      {
+        $push: {
+          rewards: {
+            ...reward,
+          },
+        },
+      },
+    );
+    if (!project) {
+      throw new NotFoundException();
+    }
+    project = await this.projectModel
+      .findById(projectId)
+      .populate('owner')
+      .populate('rewards');
+    return plainToClass(ProjectRo, await project, {
+      excludeExtraneousValues: true,
+    });
   }
 }

@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
+import { Reward } from './reward.schema';
 
 @Schema({ timestamps: { createdAt: 'createdAt' } })
 export class Project extends Document {
@@ -21,6 +22,9 @@ export class Project extends Document {
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
   public owner: User;
+
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Reward', default: [] })
+  public rewards: Reward[];
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);
