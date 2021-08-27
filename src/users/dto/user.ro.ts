@@ -12,13 +12,11 @@ export class UserRo {
 
   @IsString()
   @Expose()
-  @Matches(/^[a-zA-Z]+$/, { message: 'Bad first name' })
   @ApiProperty()
   public readonly firstName: string;
 
   @IsString()
   @Expose()
-  @Matches(/^[a-zA-Z]+$/, { message: 'Bad last name' })
   @ApiProperty()
   public readonly lastName: string;
 

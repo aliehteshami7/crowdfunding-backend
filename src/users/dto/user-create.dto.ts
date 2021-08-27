@@ -27,12 +27,10 @@ export class UserCreateDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty()
-  @Matches(/^[a-zA-Z]+$/, { message: 'Bad first name' })
   public readonly firstName: string;
 
   @IsNotEmpty()
   @IsString()
-  @Matches(/^[a-zA-Z]+$/, { message: 'Bad last name' })
   @ApiProperty()
   public readonly lastName: string;
 

@@ -16,13 +16,11 @@ export class UserUpdateDto {
 
   @IsOptional()
   @IsString()
-  @Matches(/^[a-zA-Z]+$/, { message: 'Bad first name' })
   @ApiProperty({ required: false })
   public readonly firstName: string;
 
   @IsOptional()
   @IsString()
-  @Matches(/^[a-zA-Z]+$/, { message: 'Bad last name' })
   @ApiProperty({ required: false })
   public readonly lastName: string;
 
