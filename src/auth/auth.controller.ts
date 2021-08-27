@@ -13,7 +13,7 @@ import { LoginRo } from './dto/login.ro';
 import { TokenDto } from './dto/token.dto';
 import { UserRo } from 'src/users/dto/user.ro';
 import { TokenRo } from './dto/token.ro';
-import { ApiBody, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
 import { UsersService } from 'src/users/users.service';
 import { UserCreateDto } from 'src/users/dto/user-create.dto';
@@ -41,7 +41,7 @@ export class AuthController {
   @Post('signup')
   @ApiBody({ type: UserCreateDto })
   @ApiOperation({ summary: 'Login' })
-  @ApiOkResponse({ type: LoginRo })
+  @ApiCreatedResponse({ type: LoginRo })
   async signup(@Body() userCreateDto: UserCreateDto): Promise<LoginRo> {
     const user = await this.usersService.create(userCreateDto);
     return await this.login({ user });
