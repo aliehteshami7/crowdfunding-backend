@@ -11,9 +11,6 @@ export class Project extends Document {
   @Prop({ type: String, required: true })
   public description: string;
 
-  @Prop({ type: String, required: true })
-  public blog: string;
-
   @Prop({ type: [String], required: true, default: [] })
   public imageUrls: string[];
 

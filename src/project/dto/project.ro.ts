@@ -30,12 +30,6 @@ export class ProjectRo {
   @Expose()
   public description: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
-  public blog: string;
-
   @IsString({ each: true })
   @ApiProperty()
   @Expose()

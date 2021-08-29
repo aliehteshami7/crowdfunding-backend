@@ -18,13 +18,6 @@ export class ProjectUpdateDto {
   public description: string;
 
   @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
-  public blog: string;
-
-  @IsOptional()
   @IsString({ each: true })
   @ApiProperty()
   @Expose()

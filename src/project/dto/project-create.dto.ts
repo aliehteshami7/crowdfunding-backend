@@ -15,12 +15,6 @@ export class ProjectCreateDto {
   @Expose()
   public description: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
-  public blog: string;
-
   @IsString({ each: true })
   @ApiProperty()
   @Expose()

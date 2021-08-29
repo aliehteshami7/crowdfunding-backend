@@ -30,4 +30,9 @@ export class UserRo {
   @Expose()
   @ApiProperty({ type: [UserRoleRo] })
   public readonly roles: UserRoleRo[];
+
+  @IsString()
+  @Expose()
+  @ApiProperty()
+  public readonly blog: string;
 }

@@ -28,4 +28,9 @@ export class UserUpdateDto {
   @IsEmail()
   @ApiProperty({ required: false })
   public readonly email: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  public readonly blog: string;
 }

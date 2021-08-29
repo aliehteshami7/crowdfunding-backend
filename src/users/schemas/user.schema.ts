@@ -26,6 +26,9 @@ export class User extends Document {
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Role', default: [] })
   public roles: Role[];
 
+  @Prop({ type: String, required: false })
+  public blog: string;
+
   public setPassword: (password: string) => Promise<void>;
 
   public comparePassword: (attempt: string) => Promise<boolean>;
