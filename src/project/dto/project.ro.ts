@@ -12,6 +12,7 @@ import { UserRo } from 'src/users/dto/user.ro';
 import { CategoryEnum } from '../enum/category.enum';
 import { BudgetDto } from './budget.dto';
 import { RewardRo } from './reward.ro';
+import { TimelinetDto } from './timeline.dto';
 
 export class ProjectRo {
   @IsString()
@@ -97,7 +98,12 @@ export class ProjectRo {
   @Expose()
   public timeDescription: string;
 
-  // TODO: projectTiming
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TimelinetDto)
+  @ApiProperty({ type: [TimelinetDto] })
+  @Expose()
+  public timelines: TimelinetDto[];
 
   @IsString({ each: true })
   @ApiProperty()

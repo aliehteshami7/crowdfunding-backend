@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import { CategoryEnum } from '../enum/category.enum';
 import { BudgetDto } from './budget.dto';
+import { TimelinetDto } from './timeline.dto';
 
 export class ProjectCreateDto {
   @IsString()
@@ -91,7 +92,12 @@ export class ProjectCreateDto {
   @Expose()
   public timeDescription: string;
 
-  // TODO: projectTiming
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TimelinetDto)
+  @ApiProperty({ type: [TimelinetDto] })
+  @Expose()
+  public timelines: TimelinetDto[];
 
   @IsString({ each: true })
   @ApiProperty()

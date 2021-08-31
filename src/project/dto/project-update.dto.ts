@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import { CategoryEnum } from '../enum/category.enum';
 import { BudgetDto } from './budget.dto';
+import { TimelinetDto } from './timeline.dto';
 
 export class ProjectUpdateDto {
   @IsOptional()
@@ -101,7 +102,13 @@ export class ProjectUpdateDto {
   @Expose()
   public timeDescription: string;
 
-  // TODO: projectTiming
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TimelinetDto)
+  @ApiProperty({ type: [TimelinetDto] })
+  @Expose()
+  public timelines: TimelinetDto[];
 
   @IsOptional()
   @IsString({ each: true })

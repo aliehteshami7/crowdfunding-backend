@@ -4,6 +4,7 @@ import { User } from 'src/users/schemas/user.schema';
 import { CategoryEnum } from '../enum/category.enum';
 import { Budget, BudgetSchema } from './budget.schema';
 import { Reward } from './reward.schema';
+import { Timeline, TimelineSchema } from './timeline.schema';
 
 @Schema({ timestamps: { createdAt: 'createdAt' } })
 export class Project extends Document {
@@ -45,7 +46,8 @@ export class Project extends Document {
   @Prop({ type: String, required: true })
   public timeDescription: string;
 
-  // TODO: projectTiming
+  @Prop({ type: [TimelineSchema], required: true, default: [] })
+  public timelines: Timeline[];
 
   @Prop({ type: [String], required: true, default: [] })
   public imageUrls: string[];
