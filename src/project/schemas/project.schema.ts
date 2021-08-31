@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
 import { CategoryEnum } from '../enum/category.enum';
+import { Budget, BudgetSchema } from './budget.schema';
 import { Reward } from './reward.schema';
 
 @Schema({ timestamps: { createdAt: 'createdAt' } })
@@ -21,7 +22,8 @@ export class Project extends Document {
   @Prop({ type: String, required: true })
   public summary: string;
 
-  // TODO: budget
+  @Prop({ type: [BudgetSchema], required: true, default: [] })
+  public budgets: Budget[];
 
   @Prop({ type: String, required: true })
   public budgetReason: string;

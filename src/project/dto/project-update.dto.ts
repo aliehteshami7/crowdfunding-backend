@@ -1,13 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
 import {
+  IsArray,
   IsBoolean,
   IsEnum,
   IsNotEmpty,
   IsOptional,
   IsString,
+  ValidateNested,
 } from 'class-validator';
 import { CategoryEnum } from '../enum/category.enum';
+import { BudgetDto } from './budget.dto';
 
 export class ProjectUpdateDto {
   @IsOptional()
@@ -46,7 +49,13 @@ export class ProjectUpdateDto {
   @Expose()
   public summary: string;
 
-  // TODO: budget
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => BudgetDto)
+  @ApiProperty({ type: [BudgetDto] })
+  @Expose()
+  public budgets: BudgetDto[];
 
   @IsOptional()
   @IsString()

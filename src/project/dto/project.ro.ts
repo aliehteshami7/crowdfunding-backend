@@ -10,6 +10,7 @@ import {
 } from 'class-validator';
 import { UserRo } from 'src/users/dto/user.ro';
 import { CategoryEnum } from '../enum/category.enum';
+import { BudgetDto } from './budget.dto';
 import { RewardRo } from './reward.ro';
 
 export class ProjectRo {
@@ -51,7 +52,12 @@ export class ProjectRo {
   @Expose()
   public summary: string;
 
-  // TODO: budget
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => BudgetDto)
+  @ApiProperty({ type: [BudgetDto] })
+  @Expose()
+  public budgets: BudgetDto[];
 
   @IsString()
   @IsNotEmpty()
