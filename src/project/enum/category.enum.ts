@@ -1,0 +1,6 @@
+export enum CategoryEnum {
+  COMPUTER = 'COMPUTER',
+  PHYSICS = 'PHYSICS',
+  CHEMISTRY = 'CHEMISTRY',
+  MATHEMATICS = 'MATHEMATICS',
+}
