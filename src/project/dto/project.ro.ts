@@ -33,12 +33,6 @@ export class ProjectRo {
   @IsNotEmpty()
   @ApiProperty()
   @Expose()
-  public description: string;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
   public institution: string;
 
   @IsEnum(CategoryEnum)

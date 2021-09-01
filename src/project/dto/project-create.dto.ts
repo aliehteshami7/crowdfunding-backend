@@ -21,12 +21,6 @@ export class ProjectCreateDto {
   @Expose()
   public name: string;
 
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
-  public description: string;
-
   @IsOptional()
   @IsString()
   @IsNotEmpty()

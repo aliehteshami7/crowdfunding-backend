@@ -27,13 +27,6 @@ export class ProjectUpdateDto {
   @IsNotEmpty()
   @ApiProperty()
   @Expose()
-  public description: string;
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty()
-  @Expose()
   public institution: string;
 
   @IsOptional()

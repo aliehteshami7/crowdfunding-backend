@@ -12,9 +12,6 @@ export class Project extends Document {
   @Prop({ type: String, required: true })
   public name: string;
 
-  @Prop({ type: String, required: true })
-  public description: string;
-
   @Prop({ type: String, required: false, default: '' })
   public institution: string;
 
