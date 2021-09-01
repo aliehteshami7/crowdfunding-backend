@@ -11,6 +11,7 @@ import {
 } from 'class-validator';
 import { CategoryEnum } from '../enum/category.enum';
 import { BudgetDto } from './budget.dto';
+import { TechnicalDescriptiontDto } from './technical-description.dto';
 import { TimelinetDto } from './timeline.dto';
 
 export class ProjectUpdateDto {
@@ -86,7 +87,13 @@ export class ProjectUpdateDto {
   @Expose()
   public projectGoal: string;
 
-  // TODO: technicalDesciption
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TechnicalDescriptiontDto)
+  @ApiProperty({ type: [TechnicalDescriptiontDto] })
+  @Expose()
+  public technicalDescriptions: TechnicalDescriptiontDto[];
 
   @IsOptional()
   @IsString()

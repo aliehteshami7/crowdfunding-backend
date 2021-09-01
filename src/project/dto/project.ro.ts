@@ -12,6 +12,7 @@ import { UserRo } from 'src/users/dto/user.ro';
 import { CategoryEnum } from '../enum/category.enum';
 import { BudgetDto } from './budget.dto';
 import { RewardRo } from './reward.ro';
+import { TechnicalDescriptiontDto } from './technical-description.dto';
 import { TimelinetDto } from './timeline.dto';
 
 export class ProjectRo {
@@ -84,7 +85,12 @@ export class ProjectRo {
   @Expose()
   public projectGoal: string;
 
-  // TODO: technicalDesciption
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => TechnicalDescriptiontDto)
+  @ApiProperty({ type: [TechnicalDescriptiontDto] })
+  @Expose()
+  public technicalDescriptions: TechnicalDescriptiontDto[];
 
   @IsString()
   @IsNotEmpty()

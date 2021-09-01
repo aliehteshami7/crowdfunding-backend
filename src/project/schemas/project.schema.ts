@@ -3,6 +3,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
 import { CategoryEnum } from '../enum/category.enum';
 import { Budget, BudgetSchema } from './budget.schema';
+import { Description, DescriptionSchema } from './descirption.schema';
 import { Reward } from './reward.schema';
 import { Timeline, TimelineSchema } from './timeline.schema';
 
@@ -38,7 +39,8 @@ export class Project extends Document {
   @Prop({ type: String, required: true })
   public projectGoal: string;
 
-  // TODO: technicalDesciption
+  @Prop({ type: [DescriptionSchema], required: true, default: [] })
+  public technicalDescriptions: Description[];
 
   @Prop({ type: String, required: false, default: '' })
   public projectAdditionalInfo: string;
