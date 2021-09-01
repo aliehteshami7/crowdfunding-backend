@@ -27,7 +27,7 @@ export class ProjectRo {
   @IsNotEmpty()
   @ApiProperty()
   @Expose()
-  public name: string;
+  public subject: string;
 
   @IsString()
   @IsNotEmpty()

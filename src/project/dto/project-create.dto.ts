@@ -19,7 +19,7 @@ export class ProjectCreateDto {
   @IsNotEmpty()
   @ApiProperty()
   @Expose()
-  public name: string;
+  public subject: string;
 
   @IsOptional()
   @IsString()

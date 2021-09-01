@@ -10,7 +10,7 @@ import { Timeline, TimelineSchema } from './timeline.schema';
 @Schema({ timestamps: { createdAt: 'createdAt' } })
 export class Project extends Document {
   @Prop({ type: String, required: true })
-  public name: string;
+  public subject: string;
 
   @Prop({ type: String, required: false, default: '' })
   public institution: string;
