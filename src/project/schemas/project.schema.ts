@@ -3,7 +3,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
 import { CategoryEnum } from '../enum/category.enum';
 import { Budget, BudgetSchema } from './budget.schema';
-import { Description, DescriptionSchema } from './descirption.schema';
+import { Description, DescriptionSchema } from './description.schema';
 import { Reward } from './reward.schema';
 import { Timeline, TimelineSchema } from './timeline.schema';
 
