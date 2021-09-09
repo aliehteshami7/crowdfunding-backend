@@ -53,7 +53,7 @@ export class ProjectService {
 
   async find(): Promise<ProjectsRo> {
     const projects = await this.projectModel
-      .find()
+      .find({ state: true })
       .populate('owner')
       .populate('rewards');
     return plainToClass(
