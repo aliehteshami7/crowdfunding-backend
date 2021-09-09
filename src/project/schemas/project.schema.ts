@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
 import { CategoryEnum } from '../enum/category.enum';
+import { ProjectState } from '../enum/project-state.enum';
 import { Budget, BudgetSchema } from './budget.schema';
 import { Description, DescriptionSchema } from './description.schema';
 import { Reward } from './reward.schema';
@@ -51,8 +52,12 @@ export class Project extends Document {
   @Prop({ type: [String], required: true, default: [] })
   public imageUrls: string[];
 
-  @Prop({ type: Boolean, required: true, default: false })
-  public state: boolean;
+  @Prop({
+    type: String,
+    enum: ProjectState,
+    default: 'START',
+  })
+  public state: ProjectState;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
   public owner: User;

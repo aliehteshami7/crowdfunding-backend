@@ -10,6 +10,7 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { CategoryEnum } from '../enum/category.enum';
+import { ProjectState } from '../enum/project-state.enum';
 import { BudgetDto } from './budget.dto';
 import { TechnicalDescriptiontDto } from './technical-description.dto';
 import { TimelinetDto } from './timeline.dto';
@@ -117,8 +118,10 @@ export class ProjectUpdateDto {
   public imageUrls: string[];
 
   @IsOptional()
-  @IsBoolean()
-  @ApiProperty()
+  @IsEnum(ProjectState)
+  @ApiProperty({
+    enum: ProjectState,
+  })
   @Expose()
-  public state: boolean;
+  public state: ProjectState;
 }

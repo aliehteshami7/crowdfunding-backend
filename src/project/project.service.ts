@@ -11,6 +11,7 @@ import { Project } from './schemas/project.schema';
 import { ObjectID } from 'mongodb';
 import { RewardDto } from './dto/reward.dto';
 import { Reward } from './schemas/reward.schema';
+import { ProjectState } from './enum/project-state.enum';
 
 @Injectable()
 export class ProjectService {
@@ -53,7 +54,7 @@ export class ProjectService {
 
   async find(): Promise<ProjectsRo> {
     const projects = await this.projectModel
-      .find({ state: true })
+      .find({ state: { $nin: [ProjectState.START, ProjectState.REVIEWING] } })
       .populate('owner')
       .populate('rewards');
     return plainToClass(

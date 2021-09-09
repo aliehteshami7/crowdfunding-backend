@@ -1,0 +1,7 @@
+export enum ProjectState {
+  FAILED = 'FAILED',
+  FINISHED = 'FINISHED',
+  FINANCING = 'FINANCING',
+  REVIEWING = 'REVIEWING',
+  START = 'START',
+}
