@@ -103,9 +103,4 @@ export class ProjectCreateDto {
   @ApiProperty()
   @Expose()
   public imageUrls: string[];
-
-  @IsBoolean()
-  @ApiProperty()
-  @Expose()
-  public state: boolean;
 }
