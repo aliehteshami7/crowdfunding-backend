@@ -60,6 +60,15 @@ export class ProjectController {
     return await this.projectService.findForAdmin();
   }
 
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @Get('myProjects')
+  @ApiOperation({ summary: 'Get all projects of current user' })
+  @ApiOkResponse({ type: ProjectsRo })
+  async findMyProjects(@CurrentUser() currentUser: User): Promise<ProjectsRo> {
+    return await this.projectService.findUserProjects(currentUser);
+  }
+
   @Get(':projectId')
   @ApiOperation({ summary: 'Get project by project id' })
   @ApiOkResponse({ type: ProjectRo })

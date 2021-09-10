@@ -76,6 +76,18 @@ export class ProjectService {
     );
   }
 
+  async findUserProjects(currentUser: User): Promise<ProjectsRo> {
+    const projects = await this.projectModel
+      .find({ owner: currentUser.id })
+      .populate('owner')
+      .populate('rewards');
+    return plainToClass(
+      ProjectsRo,
+      { projects },
+      { excludeExtraneousValues: true },
+    );
+  }
+
   async update(
     projectId: string,
     projectUpdateDto: ProjectUpdateDto,
