@@ -24,6 +24,9 @@ import {
 import { Get } from '@nestjs/common';
 import { PermissionViewRo } from './dto/permission-view.ro';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
+import { PermissionTag } from './enum/permission-tag.enum';
+import { Permissions } from './decorators/permissions.decorator';
 
 @ApiTags('Roles')
 @Controller('roles')
@@ -41,8 +44,10 @@ export class RolesController {
 
   @Post()
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Create a new role' })
+  @ApiOperation({ summary: "Create a new role, It's for admins" })
   @ApiCreatedResponse({ type: RoleRo })
   async createRole(@Body() roleDto: RoleDto): Promise<RoleRo> {
     return await this.rolesService.createRole(roleDto);
@@ -50,8 +55,12 @@ export class RolesController {
 
   @Put()
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Update information of an existing role' })
+  @ApiOperation({
+    summary: "Update information of an existing role, It's for admins",
+  })
   async updateRole(@Body() updateRoleDto: UpdateRoleDto): Promise<void> {
     return await this.rolesService.updateRole(updateRoleDto);
   }
@@ -72,8 +81,10 @@ export class RolesController {
 
   @Delete()
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Delete a role by its id' })
+  @ApiOperation({ summary: "Delete a role by its id, It's for admins" })
   async deleteRole(@Body() roleIdDto: RoleIdDto): Promise<void> {
     return await this.rolesService.deleteRole(roleIdDto);
   }
