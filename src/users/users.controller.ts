@@ -27,6 +27,9 @@ import { UserRoleDto } from './dto/user-role.dto';
 import { UserRolesService } from './user-roles.service';
 import { CheckPermissionDto } from './dto/checkPermission.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
+import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
+import { Permissions } from 'src/roles/decorators/permissions.decorator';
 
 @ApiTags('Users')
 @Controller('users')
@@ -40,6 +43,10 @@ export class UsersController {
   ) {}
 
   @Post()
+  @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
+  @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Create a new user' })
   @ApiCreatedResponse({ type: UserRo })
   async create(@Body() userCreateDto: UserCreateDto): Promise<UserRo> {
@@ -48,6 +55,8 @@ export class UsersController {
 
   @Put()
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Upadate infomation of an existing user' })
   async update(@Body() userUpdateDto: UserUpdateDto): Promise<void> {
@@ -56,6 +65,8 @@ export class UsersController {
 
   @Get()
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Search users' })
   @ApiOkResponse({ type: UsersRo })
@@ -66,6 +77,8 @@ export class UsersController {
   @Post('suspend')
   @HttpCode(200)
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Suspend an user by username' })
   async suspend(@Body() usernameDto: UsernameDto): Promise<void> {
@@ -75,6 +88,8 @@ export class UsersController {
   @Post('activate')
   @HttpCode(200)
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Activate an user by username' })
   async activate(@Body() usernameDto: UsernameDto): Promise<void> {
@@ -83,6 +98,8 @@ export class UsersController {
 
   @Post('role')
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Assign roles to an user' })
   async assignRole(@Body() userRoleDto: UserRoleDto): Promise<void> {
@@ -92,6 +109,8 @@ export class UsersController {
   @Post('checkPermission')
   @HttpCode(200)
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Check permissions of an user' })
   async checkPermission(
