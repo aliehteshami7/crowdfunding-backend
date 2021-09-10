@@ -89,7 +89,7 @@ export class UsersController {
     return await this.userRolesService.assignRole(userRoleDto);
   }
 
-  @Post('checkPermissoin')
+  @Post('checkPermission')
   @HttpCode(200)
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
