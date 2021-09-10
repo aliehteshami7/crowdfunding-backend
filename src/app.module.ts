@@ -9,7 +9,11 @@ import { ProjectModule } from './project/project.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(configService.getMongooseConfig()),
+    MongooseModule.forRoot(configService.getMongooseConfig(), {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }),
     UsersModule,
     AuthModule,
     RolesModule,
