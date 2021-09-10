@@ -18,6 +18,9 @@ import {
 } from '@nestjs/swagger';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
+import { Permissions } from 'src/roles/decorators/permissions.decorator';
+import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
 import { User } from 'src/users/schemas/user.schema';
 import { ProjectCreateDto } from './dto/project-create.dto';
 import { ProjectUpdateDto } from './dto/project-update.dto';
@@ -46,6 +49,17 @@ export class ProjectController {
     return await this.projectService.create(projectCreateDto, currentUser);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
+  @UseGuards(JwtAuthGuard)
+  @Get('all')
+  @ApiOperation({ summary: "Get all projects, It's for Admins" })
+  @ApiOkResponse({ type: ProjectsRo })
+  async findForAdmin(): Promise<ProjectsRo> {
+    return await this.projectService.findForAdmin();
+  }
+
   @Get(':projectId')
   @ApiOperation({ summary: 'Get project by project id' })
   @ApiOkResponse({ type: ProjectRo })
@@ -54,7 +68,7 @@ export class ProjectController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all projects' })
+  @ApiOperation({ summary: "Get reviewed projects, It's for default users" })
   @ApiOkResponse({ type: ProjectsRo })
   async find(): Promise<ProjectsRo> {
     return await this.projectService.find();
