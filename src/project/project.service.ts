@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToClass } from 'class-transformer';
 import { Model } from 'mongoose';
@@ -12,6 +17,8 @@ import { ObjectID } from 'mongodb';
 import { RewardDto } from './dto/reward.dto';
 import { Reward } from './schemas/reward.schema';
 import { ProjectState } from './enum/project-state.enum';
+import { UserRolesService } from 'src/users/user-roles.service';
+import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
 
 @Injectable()
 export class ProjectService {
@@ -20,6 +27,8 @@ export class ProjectService {
     private projectModel: Model<Project>,
     @InjectModel(Reward.name)
     private rewardModel: Model<Reward>,
+    @Inject(UserRolesService)
+    private userRolesService: UserRolesService,
   ) {}
 
   async create(
@@ -91,10 +100,12 @@ export class ProjectService {
   async update(
     projectId: string,
     projectUpdateDto: ProjectUpdateDto,
+    currentUser: User,
   ): Promise<ProjectRo> {
     if (!ObjectID.isValid(projectId)) {
       throw new NotFoundException();
     }
+    await this.checkPermission(projectId, currentUser);
     const project = await this.projectModel
       .findOneAndUpdate({ _id: projectId }, projectUpdateDto)
       .populate('owner')
@@ -117,10 +128,15 @@ export class ProjectService {
     }
   }
 
-  async addReward(projectId: string, rewardDto: RewardDto): Promise<ProjectRo> {
+  async addReward(
+    projectId: string,
+    rewardDto: RewardDto,
+    currentUser: User,
+  ): Promise<ProjectRo> {
     if (!ObjectID.isValid(projectId)) {
       throw new NotFoundException();
     }
+    await this.checkPermission(projectId, currentUser);
     const reward = await this.rewardModel.create(rewardDto);
     let project = await this.projectModel.findOneAndUpdate(
       { _id: projectId },
@@ -142,5 +158,20 @@ export class ProjectService {
     return plainToClass(ProjectRo, await project, {
       excludeExtraneousValues: true,
     });
+  }
+
+  async checkPermission(projectId: string, currentUser: User): Promise<void> {
+    const project = await this.read(projectId);
+    try {
+      await this.userRolesService.checkPermission({
+        username: currentUser.username,
+        permissions: [PermissionTag.ADMIN],
+      });
+      return;
+    } catch {}
+    if (project.owner.username === currentUser.username) {
+      return;
+    }
+    throw new ForbiddenException('You do not have permission');
   }
 }

@@ -86,19 +86,29 @@ export class ProjectController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Put(':projectId')
-  @ApiOperation({ summary: 'Update information of an existing project' })
+  @ApiOperation({
+    summary:
+      'Update information of an existing project, user should be admin or owner',
+  })
   @ApiOkResponse({ type: ProjectRo })
   async update(
     @Param('projectId') projectId: string,
     @Body() projectUpdateDto: ProjectUpdateDto,
+    @CurrentUser() currentUser: User,
   ): Promise<ProjectRo> {
-    return await this.projectService.update(projectId, projectUpdateDto);
+    return await this.projectService.update(
+      projectId,
+      projectUpdateDto,
+      currentUser,
+    );
   }
 
   @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @Delete(':projectId')
-  @ApiOperation({ summary: 'Delete a project by its id' })
+  @ApiOperation({ summary: "Delete a project by its id, It's for admins" })
   async delete(@Param('projectId') projectId: string): Promise<void> {
     await this.projectService.delete(projectId);
   }
@@ -106,11 +116,18 @@ export class ProjectController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @Post(':projectId/addReward')
-  @ApiOperation({ summary: 'Add a reward to a project' })
+  @ApiOperation({
+    summary: 'Add a reward to a project, user should be admin or owner',
+  })
   async addReward(
     @Param('projectId') projectId: string,
     @Body() rewardDto: RewardDto,
+    @CurrentUser() currentUser: User,
   ): Promise<ProjectRo> {
-    return await this.projectService.addReward(projectId, rewardDto);
+    return await this.projectService.addReward(
+      projectId,
+      rewardDto,
+      currentUser,
+    );
   }
 }
