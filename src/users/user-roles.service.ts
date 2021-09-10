@@ -56,7 +56,7 @@ export class UserRolesService {
     permissions.forEach((permission) => {
       if (!userPermissions.includes(permission))
         throw new ForbiddenException(
-          `User do not have permission ${permission}`,
+          `You do not have permission ${permission}`,
         );
     });
   }
