@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserRo } from '../users/dto/user.ro';
 import { LoginRo } from './dto/login.ro';
-import TokenDto from './dto/token.dto';
 import { TokenRo } from './dto/token.ro';
 
 @Injectable()
@@ -18,9 +17,10 @@ export class AuthService {
     };
   }
 
-  async validateToken(tokenDto: TokenDto): Promise<TokenRo> {
+  async validateToken(bearerToken: string): Promise<TokenRo> {
     try {
-      const user = await this.jwtService.verifyAsync(tokenDto.token);
+      const token = bearerToken.replace('Bearer ', '');
+      const user = await this.jwtService.verifyAsync(token);
       return {
         username: user.username,
       };

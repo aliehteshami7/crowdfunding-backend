@@ -6,14 +6,21 @@ import {
   Request,
   HttpCode,
   Inject,
+  Headers,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AuthService } from './auth.service';
 import { LoginRo } from './dto/login.ro';
-import { TokenDto } from './dto/token.dto';
 import { UserRo } from 'src/users/dto/user.ro';
 import { TokenRo } from './dto/token.ro';
-import { ApiBody, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiBody,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { LoginDto } from './dto/login.dto';
 import { UsersService } from 'src/users/users.service';
 import { UserCreateDto } from 'src/users/dto/user-create.dto';
@@ -48,10 +55,13 @@ export class AuthController {
   }
 
   @Post('verifyToken')
+  @ApiBearerAuth()
   @HttpCode(200)
   @ApiOperation({ summary: 'Verify Token' })
   @ApiOkResponse({ type: TokenRo })
-  async verify(@Body() tokenDto: TokenDto): Promise<TokenRo> {
-    return await this.authService.validateToken(tokenDto);
+  async verify(
+    @Headers('Authorization') bearerToken: string,
+  ): Promise<TokenRo> {
+    return await this.authService.validateToken(bearerToken);
   }
 }
