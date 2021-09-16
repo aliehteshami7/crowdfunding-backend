@@ -30,6 +30,8 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
 import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
 import { Permissions } from 'src/roles/decorators/permissions.decorator';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { User } from './schemas/user.schema';
 
 @ApiTags('Users')
 @Controller('users')
@@ -74,6 +76,18 @@ export class UsersController {
   @ApiOkResponse({ type: UsersRo })
   async find(@Query() userFindDto: UserFindDto): Promise<UsersRo> {
     return await this.userService.find(userFindDto);
+  }
+
+  @Get('profile')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Get user profile' })
+  @ApiOkResponse({ type: UserRo })
+  async userProfile(@CurrentUser() currentUser: User): Promise<UsersRo> {
+    return await this.userService.find({
+      ...new UserFindDto(),
+      username: currentUser.username,
+    });
   }
 
   @Post('suspend')
