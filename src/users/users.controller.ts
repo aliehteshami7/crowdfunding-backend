@@ -47,7 +47,7 @@ export class UsersController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Create a new user' })
+  @ApiOperation({ summary: "Create a new user,  It's for admins" })
   @ApiCreatedResponse({ type: UserRo })
   async create(@Body() userCreateDto: UserCreateDto): Promise<UserRo> {
     return await this.userService.create(userCreateDto);
@@ -58,7 +58,9 @@ export class UsersController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Upadate infomation of an existing user' })
+  @ApiOperation({
+    summary: "Upadate infomation of an existing user, It's for admins",
+  })
   async update(@Body() userUpdateDto: UserUpdateDto): Promise<void> {
     return await this.userService.update(userUpdateDto);
   }
@@ -68,7 +70,7 @@ export class UsersController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Search users' })
+  @ApiOperation({ summary: "Search users,  It's for admins" })
   @ApiOkResponse({ type: UsersRo })
   async find(@Query() userFindDto: UserFindDto): Promise<UsersRo> {
     return await this.userService.find(userFindDto);
@@ -80,7 +82,7 @@ export class UsersController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Suspend an user by username' })
+  @ApiOperation({ summary: "Suspend an user by username,  It's for admins" })
   async suspend(@Body() usernameDto: UsernameDto): Promise<void> {
     return await this.userService.suspend(usernameDto);
   }
@@ -91,7 +93,7 @@ export class UsersController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Activate an user by username' })
+  @ApiOperation({ summary: "Activate an user by username,  It's for admins" })
   async activate(@Body() usernameDto: UsernameDto): Promise<void> {
     return await this.userService.activate(usernameDto);
   }
@@ -101,7 +103,7 @@ export class UsersController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Assign roles to an user' })
+  @ApiOperation({ summary: "Assign roles to an user,  It's for admins" })
   async assignRole(@Body() userRoleDto: UserRoleDto): Promise<void> {
     return await this.userRolesService.assignRole(userRoleDto);
   }
@@ -112,7 +114,7 @@ export class UsersController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Check permissions of an user' })
+  @ApiOperation({ summary: "Check permissions of an user,  It's for admins" })
   async checkPermission(
     @Body() checkPermissionDto: CheckPermissionDto,
   ): Promise<void> {
