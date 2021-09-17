@@ -52,7 +52,7 @@ const configService = new ConfigService(process.env).ensureValues([
   'JWT_EXPIRE_IN',
   'SUPERUSER_USERNAME',
   'SUPERUSER_PASSWORD',
-  'IMAGE_PATH',
+  'MEDIA_PATH',
   'AVATAR_PATH',
 ]);
 

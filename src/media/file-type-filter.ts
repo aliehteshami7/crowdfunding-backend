@@ -2,12 +2,28 @@ import { BadRequestException } from '@nestjs/common';
 import * as path from 'path';
 
 export enum FileType {
+  MEDIA = 'MEDIA',
   IMAGE = 'IMAGE',
   BIN = 'BIN',
   JSON = 'JSON',
 }
 
-const extNames = {
+export const extNames = {
+  [FileType.MEDIA]: [
+    '.png',
+    '.jpg',
+    '.gif',
+    '.jpeg',
+    '.mp4',
+    '.mkv',
+    '.webm',
+    '.ogg',
+    '.avi',
+    '.mov',
+    '.wmv',
+    '.mpeg',
+    '.mpg',
+  ],
   [FileType.IMAGE]: ['.png', '.jpg', '.gif', '.jpeg'],
   [FileType.BIN]: ['.bin'],
   [FileType.JSON]: ['.json'],

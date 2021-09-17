@@ -13,53 +13,58 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { plainToClass } from 'class-transformer';
 import { Response } from 'express';
 import { createReadStream } from 'fs';
-import { dirname, join } from 'path';
+import { extname, dirname, join } from 'path';
 import { configService } from 'src/config.service';
 import { getDiskStorage } from './disk-storage';
-import { UploadImageRo } from './dto/upload-image.ro';
-import { FileType, getFilter } from './file-type-filter';
+import { UploadMediaRo } from './dto/upload-media.ro';
+import { extNames, FileType, getFilter } from './file-type-filter';
 import 'multer';
 import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import * as fs from 'fs';
 
 const appDir = join(dirname(require.main.filename), '..');
-const imagePath = join(appDir, configService.getValue('IMAGE_PATH'));
+const mediaPath = join(appDir, configService.getValue('MEDIA_PATH'));
 const avatarPath = join(appDir, configService.getValue('AVATAR_PATH'));
 
 @ApiTags('Media')
 @Controller('media')
 export class MediaController {
-  @Get('image/:imageName')
-  @ApiOperation({ summary: 'Get image by name' })
-  getImage(@Param('imageName') imageName: string, @Res() res: Response) {
-    const fileName = imageName.replace(/.([^.]*)$/, '_$1');
-    const filePath = join(imagePath, fileName);
+  @Get(':mediaName')
+  @ApiOperation({ summary: 'Get media by name' })
+  getMedia(@Param('mediaName') mediaName: string, @Res() res: Response) {
+    const fileName = mediaName.replace(/.([^.]*)$/, '_$1');
+    const filePath = join(mediaPath, fileName);
     if (!fs.existsSync(filePath)) {
-      throw new NotFoundException('Image Not Found!');
+      throw new NotFoundException('Media Not Found!');
     }
-    res.setHeader('Content-Type', 'image/*');
+    const ext = extname(mediaName);
+    if (extNames[FileType.IMAGE].includes(ext)) {
+      res.setHeader('Content-Type', 'image/*');
+    } else {
+      res.setHeader('Content-Type', 'video/*');
+    }
     createReadStream(filePath).pipe(res);
   }
 
-  @Post('image/upload')
-  @ApiOperation({ summary: 'Upload image' })
-  @ApiCreatedResponse({ type: UploadImageRo })
+  @Post()
+  @ApiOperation({ summary: 'Upload media' })
+  @ApiCreatedResponse({ type: UploadMediaRo })
   @UseInterceptors(
     FileInterceptor('file', {
-      fileFilter: getFilter(FileType.IMAGE),
-      storage: getDiskStorage(imagePath),
+      fileFilter: getFilter(FileType.MEDIA),
+      storage: getDiskStorage(mediaPath),
       limits: {
-        fileSize: +configService.getValue('IMAGE_MAX_SIZE', false) || 5000000,
+        fileSize: +configService.getValue('MEDIA_MAX_SIZE', false) || 5000000,
       },
     }),
   )
-  uploadFile(@UploadedFile() file: Express.Multer.File): UploadImageRo {
+  uploadFile(@UploadedFile() file: Express.Multer.File): UploadMediaRo {
     if (!file) {
-      throw new BadRequestException('Image not found!');
+      throw new BadRequestException('File not found!');
     }
     const fileName = file.filename.replace(/_([^_]*)$/, '.$1');
-    return plainToClass(UploadImageRo, {
-      path: 'media/image/' + fileName,
+    return plainToClass(UploadMediaRo, {
+      path: 'media/' + fileName,
     });
   }
 
@@ -75,9 +80,9 @@ export class MediaController {
     createReadStream(filePath).pipe(res);
   }
 
-  @Post('avatar/upload')
+  @Post('avatar')
   @ApiOperation({ summary: 'Upload avatar' })
-  @ApiCreatedResponse({ type: UploadImageRo })
+  @ApiCreatedResponse({ type: UploadMediaRo })
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: getFilter(FileType.IMAGE),
@@ -87,12 +92,12 @@ export class MediaController {
       },
     }),
   )
-  uploadAvatar(@UploadedFile() file: Express.Multer.File): UploadImageRo {
+  uploadAvatar(@UploadedFile() file: Express.Multer.File): UploadMediaRo {
     if (!file) {
       throw new BadRequestException('Avatar not found!');
     }
     const fileName = file.filename.replace(/_([^_]*)$/, '.$1');
-    return plainToClass(UploadImageRo, {
+    return plainToClass(UploadMediaRo, {
       path: 'media/avatar/' + fileName,
     });
   }
