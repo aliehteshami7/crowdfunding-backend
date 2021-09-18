@@ -114,8 +114,8 @@ export class UsersController {
 
   @Post('role')
   @ApiBearerAuth()
-  @UseGuards(PermissionsGuard)
-  @Permissions(PermissionTag.ADMIN)
+  // @UseGuards(PermissionsGuard)
+  // @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Assign roles to an user,  It's for admins" })
   async assignRole(@Body() userRoleDto: UserRoleDto): Promise<void> {
