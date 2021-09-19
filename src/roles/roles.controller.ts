@@ -44,8 +44,8 @@ export class RolesController {
 
   @Post()
   @ApiBearerAuth()
-  // @UseGuards(PermissionsGuard)
-  // @Permissions(PermissionTag.ADMIN)
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Create a new role, It's for admins" })
   @ApiCreatedResponse({ type: RoleRo })
