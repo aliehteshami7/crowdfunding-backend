@@ -81,11 +81,26 @@ export class UsersController {
   @Get('profile')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: 'Get user profile' })
+  @ApiOperation({ summary: "Get user's profile" })
   @ApiOkResponse({ type: UserRo })
   async userProfile(@CurrentUser() currentUser: User): Promise<UsersRo> {
     return await this.userService.find({
       ...new UserFindDto(),
+      username: currentUser.username,
+    });
+  }
+
+  @Post('profile')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: "Update user's profile" })
+  @ApiOkResponse({ type: UserRo })
+  async updateUserProfile(
+    @Body() userUpdateDto: UserUpdateDto,
+    @CurrentUser() currentUser: User,
+  ): Promise<void> {
+    return await this.userService.update({
+      ...userUpdateDto,
       username: currentUser.username,
     });
   }
