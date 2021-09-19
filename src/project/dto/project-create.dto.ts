@@ -22,7 +22,6 @@ export class ProjectCreateDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty()
   @Expose()
   public institution: string;
@@ -80,7 +79,6 @@ export class ProjectCreateDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty()
   @Expose()
   public projectAdditionalInfo: string;
