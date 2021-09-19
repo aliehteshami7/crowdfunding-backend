@@ -67,8 +67,14 @@ export class UsersService {
     };
   }
 
-  async findUserByUsername(username: string): Promise<User> {
-    return await this.userModel.findOne({ username }).populate('roles');
+  async findUserByUsername(username: string): Promise<UserRo> {
+    return plainToClass(
+      UserRo,
+      await this.userModel.findOne({ username }).populate('roles'),
+      {
+        excludeExtraneousValues: true,
+      },
+    );
   }
 
   async suspend(usernameDto: UsernameDto): Promise<void> {
