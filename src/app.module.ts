@@ -6,6 +6,7 @@ import { configService } from './config.service';
 import { RolesModule } from './roles/roles.module';
 import { MediaModule } from './media/media.module';
 import { ProjectModule } from './project/project.module';
+import { PaymentModule } from './payment/payment.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { ProjectModule } from './project/project.module';
     RolesModule,
     MediaModule,
     ProjectModule,
+    PaymentModule,
   ],
 })
 export class AppModule {}
