@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsDate, IsNotEmpty, IsString } from 'class-validator';
 
 export class TimelinetDto {
   @IsString()
@@ -10,6 +10,7 @@ export class TimelinetDto {
   public name: string;
 
   @Type(() => Date)
+  @IsDate()
   @ApiProperty()
   @Expose()
   public date: Date;
