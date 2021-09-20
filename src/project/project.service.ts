@@ -107,7 +107,7 @@ export class ProjectService {
     }
     await this.checkPermission(projectId, currentUser);
     const project = await this.projectModel
-      .findOneAndUpdate({ _id: projectId }, projectUpdateDto)
+      .findOneAndUpdate({ _id: projectId }, { $set: projectUpdateDto })
       .populate('owner')
       .populate('rewards');
     if (!project) {
