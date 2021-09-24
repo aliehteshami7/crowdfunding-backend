@@ -14,11 +14,29 @@ export class User extends Document {
   @Prop({ type: String, required: true, unique: true, index: true })
   public username: string;
 
-  @Prop({ type: String, required: true, default: 'NO_PASSWORD' })
+  @Prop({ type: String, required: true })
   public password: string;
 
   @Prop({ type: Boolean, required: true, default: false })
   public isActive: boolean;
+
+  @Prop({ type: String, required: false })
+  public avatarAddress: string;
+
+  @Prop({ type: String, required: false })
+  public description: string;
+
+  @Prop({ type: String, required: false })
+  public professionalName: string;
+
+  @Prop({ type: String, required: false })
+  public address: string;
+
+  @Prop({ type: String, required: false })
+  public website: string;
+
+  @Prop({ type: String, required: false })
+  public linkedinAddress: string;
 
   @Prop({ type: String, required: true })
   public email: string;

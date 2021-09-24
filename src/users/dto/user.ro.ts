@@ -35,4 +35,28 @@ export class UserRo {
   @Expose()
   @ApiProperty()
   public readonly blog: string;
+
+  @IsString()
+  @ApiProperty()
+  public readonly avatarAddress: string;
+
+  @IsString()
+  @ApiProperty()
+  public readonly description: string;
+
+  @IsString()
+  @ApiProperty()
+  public readonly professionalName: string;
+
+  @IsString()
+  @ApiProperty()
+  public readonly address: string;
+
+  @IsString()
+  @ApiProperty()
+  public readonly website: string;
+
+  @IsString()
+  @ApiProperty()
+  public readonly linkedinAddress: string;
 }

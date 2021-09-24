@@ -2,6 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
+  IsOptional,
   IsString,
   Matches,
   MaxLength,
@@ -38,4 +39,34 @@ export class UserCreateDto {
   @IsEmail()
   @ApiProperty()
   public readonly email: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  public readonly avatarAddress: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  public readonly description: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  public readonly professionalName: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  public readonly address: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  public readonly website: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiProperty()
+  public readonly linkedinAddress: string;
 }
