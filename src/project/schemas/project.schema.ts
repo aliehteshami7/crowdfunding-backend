@@ -54,10 +54,10 @@ export class Project extends Document {
 
   @Prop({
     type: String,
-    enum: ProjectState,
+    enum: ProjectStateEnum,
     default: 'START',
   })
-  public state: ProjectState;
+  public state: ProjectStateEnum;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'User', required: true })
   public owner: User;

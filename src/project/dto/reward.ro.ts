@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class RewardRo {
   @IsString()
@@ -22,9 +22,8 @@ export class RewardRo {
   @Expose()
   public description: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsNumber()
   @ApiProperty()
   @Expose()
-  public value: string;
+  public value: number;
 }
