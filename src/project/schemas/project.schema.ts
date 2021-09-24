@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { User } from 'src/users/schemas/user.schema';
 import { CategoryEnum } from '../enum/category.enum';
-import { ProjectState } from '../enum/project-state.enum';
+import { ProjectStateEnum } from '../enum/project-state.enum';
 import { Budget, BudgetSchema } from './budget.schema';
 import { Description, DescriptionSchema } from './description.schema';
 import { Reward } from './reward.schema';

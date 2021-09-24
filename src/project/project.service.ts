@@ -16,7 +16,7 @@ import { Project } from './schemas/project.schema';
 import { ObjectID } from 'mongodb';
 import { RewardDto } from './dto/reward.dto';
 import { Reward } from './schemas/reward.schema';
-import { ProjectState } from './enum/project-state.enum';
+import { ProjectStateEnum } from './enum/project-state.enum';
 import { UserRolesService } from 'src/users/user-roles.service';
 import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
 
@@ -63,7 +63,9 @@ export class ProjectService {
 
   async find(): Promise<ProjectsRo> {
     const projects = await this.projectModel
-      .find({ state: { $nin: [ProjectState.START, ProjectState.REVIEWING] } })
+      .find({
+        state: { $nin: [ProjectStateEnum.START, ProjectStateEnum.REVIEWING] },
+      })
       .populate('owner')
       .populate('rewards');
     return plainToClass(

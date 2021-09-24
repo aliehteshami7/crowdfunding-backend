@@ -9,7 +9,7 @@ import {
 } from 'class-validator';
 import { UserRo } from 'src/users/dto/user.ro';
 import { CategoryEnum } from '../enum/category.enum';
-import { ProjectState } from '../enum/project-state.enum';
+import { ProjectStateEnum } from '../enum/project-state.enum';
 import { BudgetDto } from './budget.dto';
 import { RewardRo } from './reward.ro';
 import { TechnicalDescriptiontDto } from './technical-description.dto';
@@ -110,12 +110,12 @@ export class ProjectRo {
   @Expose()
   public imageUrls: string[];
 
-  @IsEnum(ProjectState)
+  @IsEnum(ProjectStateEnum)
   @ApiProperty({
-    enum: ProjectState,
+    enum: ProjectStateEnum,
   })
   @Expose()
-  public state: ProjectState;
+  public state: ProjectStateEnum;
 
   @Type(() => UserRo)
   @ApiProperty()
