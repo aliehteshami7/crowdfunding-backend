@@ -40,6 +40,23 @@ class ConfigService {
       password: this.getValue('SUPERUSER_PASSWORD'),
     };
   }
+
+  public getMediaPath() {
+    return this.getValue('MEDIA_PATH');
+  }
+
+  public getAvatarPath() {
+    return this.getValue('AVATAR_PATH');
+  }
+
+  public getZarrinpalConfig() {
+    return {
+      merchantId: this.getValue('ZARRINPAL_MERCHANT_ID'),
+      callbackUrl: this.getValue('PAYMENT_CALLBACK_URL'),
+      testEnv:
+        this.getValue('PAYMENT_TEST_ENVIRONMENT').toLowerCase() === 'true',
+    };
+  }
 }
 
 const configService = new ConfigService(process.env).ensureValues([
@@ -54,6 +71,9 @@ const configService = new ConfigService(process.env).ensureValues([
   'SUPERUSER_PASSWORD',
   'MEDIA_PATH',
   'AVATAR_PATH',
+  'ZARRINPAL_MERCHANT_ID',
+  'PAYMENT_CALLBACK_URL',
+  'PAYMENT_TEST_ENVIRONMENT',
 ]);
 
 export { configService };
