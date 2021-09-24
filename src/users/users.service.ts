@@ -48,7 +48,7 @@ export class UsersService {
     const { username } = userUpdateDto;
     const user = await this.userModel.findOneAndUpdate(
       { username },
-      userUpdateDto,
+      { $set: userUpdateDto },
     );
     if (!user) {
       throw new NotFoundException();
@@ -73,7 +73,9 @@ export class UsersService {
 
   async suspend(usernameDto: UsernameDto): Promise<void> {
     const user = await this.userModel.findOneAndUpdate(usernameDto, {
-      isActive: false,
+      $set: {
+        isActive: false,
+      },
     });
     if (!user) {
       throw new NotFoundException();
@@ -81,7 +83,9 @@ export class UsersService {
   }
   async activate(usernameDto: UsernameDto): Promise<void> {
     const user = await this.userModel.findOneAndUpdate(usernameDto, {
-      isActive: true,
+      $set: {
+        isActive: true,
+      },
     });
     if (!user) {
       throw new NotFoundException();
