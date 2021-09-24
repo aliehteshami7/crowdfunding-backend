@@ -23,8 +23,8 @@ import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import * as fs from 'fs';
 
 const appDir = join(dirname(require.main.filename), '..');
-const mediaPath = join(appDir, configService.getValue('MEDIA_PATH'));
-const avatarPath = join(appDir, configService.getValue('AVATAR_PATH'));
+const mediaPath = join(appDir, configService.getMediaPath());
+const avatarPath = join(appDir, configService.getAvatarPath());
 
 @ApiTags('Media')
 @Controller('media')
