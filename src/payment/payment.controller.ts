@@ -74,8 +74,8 @@ export class PaymentController {
   @UseGuards(PermissionsGuard)
   @Permissions(PermissionTag.ADMIN)
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({ summary: "Get all payment. It's for admins" })
-  @ApiOkResponse({ type: PaymentLinkRo })
+  @ApiOperation({ summary: "Get all payments. It's for admins" })
+  @ApiOkResponse({ type: PaymentsRo })
   async findAll(): Promise<PaymentsRo> {
     return this.paymentService.findAll();
   }
