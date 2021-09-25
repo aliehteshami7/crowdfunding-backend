@@ -4,12 +4,16 @@ import { UsersModule } from 'src/users/users.module';
 import { ProjectController } from './project.controller';
 import { ProjectService } from './project.service';
 import { Project, ProjectSchema } from './schemas/project.schema';
+import { Review, ReviewSchema } from './schemas/review.schema';
 import { Reward, RewardSchema } from './schemas/reward.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Project.name, schema: ProjectSchema }]),
-    MongooseModule.forFeature([{ name: Reward.name, schema: RewardSchema }]),
+    MongooseModule.forFeature([
+      { name: Project.name, schema: ProjectSchema },
+      { name: Reward.name, schema: RewardSchema },
+      { name: Review.name, schema: ReviewSchema },
+    ]),
     UsersModule,
   ],
   controllers: [ProjectController],

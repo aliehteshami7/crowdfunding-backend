@@ -26,6 +26,7 @@ import { ProjectCreateDto } from './dto/project-create.dto';
 import { ProjectUpdateDto } from './dto/project-update.dto';
 import { ProjectRo } from './dto/project.ro';
 import { ProjectsRo } from './dto/projects.ro';
+import { ReviewDto } from './dto/review.dto';
 import { RewardDto } from './dto/reward.dto';
 import { ProjectService } from './project.service';
 
@@ -58,6 +59,17 @@ export class ProjectController {
   @ApiOkResponse({ type: ProjectsRo })
   async findForAdmin(): Promise<ProjectsRo> {
     return await this.projectService.findForAdmin();
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.REVIEWER)
+  @UseGuards(JwtAuthGuard)
+  @Get('reviewing')
+  @ApiOperation({ summary: "Get all reviewing projects, It's for Reviewers" })
+  @ApiOkResponse({ type: ProjectsRo })
+  async findForReviewer(): Promise<ProjectsRo> {
+    return await this.projectService.findForReviewer();
   }
 
   @ApiBearerAuth()
@@ -129,5 +141,22 @@ export class ProjectController {
       rewardDto,
       currentUser,
     );
+  }
+
+  @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.REVIEWER)
+  @UseGuards(JwtAuthGuard)
+  @Post(':projectId/review')
+  @ApiOperation({
+    summary:
+      "Review a project, It's for reviewer. If reviewr's review exists, then it updates it",
+  })
+  async addReview(
+    @Param('projectId') projectId: string,
+    @Body() reviewDto: ReviewDto,
+    @CurrentUser() currentUser: User,
+  ): Promise<void> {
+    await this.projectService.addReview(projectId, reviewDto, currentUser);
   }
 }

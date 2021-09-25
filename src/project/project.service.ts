@@ -19,6 +19,8 @@ import { Reward } from './schemas/reward.schema';
 import { ProjectStateEnum } from './enum/project-state.enum';
 import { UserRolesService } from 'src/users/user-roles.service';
 import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
+import { ReviewDto } from './dto/review.dto';
+import { Review } from './schemas/review.schema';
 
 @Injectable()
 export class ProjectService {
@@ -27,6 +29,8 @@ export class ProjectService {
     private projectModel: Model<Project>,
     @InjectModel(Reward.name)
     private rewardModel: Model<Reward>,
+    @InjectModel(Review.name)
+    private reviewModel: Model<Review>,
     @Inject(UserRolesService)
     private userRolesService: UserRolesService,
   ) {}
@@ -66,6 +70,21 @@ export class ProjectService {
     const projects = await this.projectModel
       .find({
         state: { $nin: [ProjectStateEnum.START, ProjectStateEnum.REVIEWING] },
+      })
+      .populate('owner')
+      .populate('rewards')
+      .populate('reviews');
+    return plainToClass(
+      ProjectsRo,
+      { projects },
+      { excludeExtraneousValues: true },
+    );
+  }
+
+  async findForReviewer(): Promise<ProjectsRo> {
+    const projects = await this.projectModel
+      .find({
+        state: { $in: [ProjectStateEnum.REVIEWING] },
       })
       .populate('owner')
       .populate('rewards')
@@ -181,5 +200,44 @@ export class ProjectService {
       return;
     }
     throw new ForbiddenException('You do not have permission');
+  }
+
+  async addReview(
+    projectId: string,
+    reviewDto: ReviewDto,
+    currentUser: User,
+  ): Promise<void> {
+    if (!ObjectID.isValid(projectId)) {
+      throw new NotFoundException();
+    }
+
+    const project = await this.projectModel
+      .findById(projectId)
+      .populate('reviews');
+
+    if (!project) {
+      throw new NotFoundException();
+    }
+
+    let review = null;
+
+    project.reviews.forEach((rev) => {
+      if (rev.reviewer.username === currentUser.username) {
+        review = rev;
+      }
+    });
+
+    if (review == null) {
+      review = await this.reviewModel.create({
+        score: reviewDto.score,
+        text: reviewDto.text,
+        reviewer: currentUser,
+      });
+    } else {
+      review.score = reviewDto.score;
+      review.text = reviewDto.text;
+    }
+
+    await review.save();
   }
 }

@@ -5,7 +5,7 @@ import { User } from 'src/users/schemas/user.schema';
 @Schema()
 export class Review extends Document {
   @Prop({ type: Number, required: true })
-  public point: number;
+  public score: number;
 
   @Prop({ type: String, required: true })
   public text: string;

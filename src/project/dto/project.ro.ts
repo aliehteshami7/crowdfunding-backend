@@ -11,6 +11,7 @@ import { UserRo } from 'src/users/dto/user.ro';
 import { CategoryEnum } from '../enum/category.enum';
 import { ProjectStateEnum } from '../enum/project-state.enum';
 import { BudgetDto } from './budget.dto';
+import { ReviewRo } from './review.ro';
 import { RewardRo } from './reward.ro';
 import { TechnicalDescriptiontDto } from './technical-description.dto';
 import { TimelinetDto } from './timeline.dto';
@@ -128,4 +129,11 @@ export class ProjectRo {
   @ApiProperty({ type: [RewardRo] })
   @Expose()
   public rewards: RewardRo[];
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ReviewRo)
+  @ApiProperty({ type: [ReviewRo] })
+  @Expose()
+  public reviews: ReviewRo[];
 }
