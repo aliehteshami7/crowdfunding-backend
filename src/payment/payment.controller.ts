@@ -19,7 +19,7 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { PermissionsGuard } from 'src/auth/guards/permissions.guard';
 import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
 import { User } from 'src/users/schemas/user.schema';
-import { DonateDto } from './dto/donate.ro';
+import { DonateDto } from './dto/donate.dto';
 import { PayRewardDto } from './dto/pay-reward.dto';
 import { PaymentLinkRo } from './dto/payment-link.ro';
 import { PaymentResultRo } from './dto/payment-result.ro';

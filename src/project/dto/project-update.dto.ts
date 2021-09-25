@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
@@ -19,14 +19,12 @@ export class ProjectUpdateDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public subject: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public institution: string;
 
   @IsOptional()
@@ -41,7 +39,6 @@ export class ProjectUpdateDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public summary: string;
 
   @IsOptional()
@@ -49,35 +46,30 @@ export class ProjectUpdateDto {
   @ValidateNested({ each: true })
   @Type(() => BudgetDto)
   @ApiProperty({ type: [BudgetDto] })
-  @Expose()
   public budgets: BudgetDto[];
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public budgetReason: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public projectFirstIdea: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public projectMainIdea: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public projectGoal: string;
 
   @IsOptional()
@@ -85,21 +77,18 @@ export class ProjectUpdateDto {
   @ValidateNested({ each: true })
   @Type(() => TechnicalDescriptiontDto)
   @ApiProperty({ type: [TechnicalDescriptiontDto] })
-  @Expose()
   public technicalDescriptions: TechnicalDescriptiontDto[];
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public projectAdditionalInfo: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  @Expose()
   public timeDescription: string;
 
   @IsOptional()
@@ -107,13 +96,11 @@ export class ProjectUpdateDto {
   @ValidateNested({ each: true })
   @Type(() => TimelinetDto)
   @ApiProperty({ type: [TimelinetDto] })
-  @Expose()
   public timelines: TimelinetDto[];
 
   @IsOptional()
   @IsString({ each: true })
   @ApiProperty()
-  @Expose()
   public imageUrls: string[];
 
   @IsOptional()
@@ -121,6 +108,5 @@ export class ProjectUpdateDto {
   @ApiProperty({
     enum: ProjectStateEnum,
   })
-  @Expose()
   public state: ProjectStateEnum;
 }
