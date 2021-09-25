@@ -5,6 +5,7 @@ import { CategoryEnum } from '../enum/category.enum';
 import { ProjectStateEnum } from '../enum/project-state.enum';
 import { Budget, BudgetSchema } from './budget.schema';
 import { Description, DescriptionSchema } from './description.schema';
+import { Review } from './review.schema';
 import { Reward } from './reward.schema';
 import { Timeline, TimelineSchema } from './timeline.schema';
 
@@ -64,6 +65,9 @@ export class Project extends Document {
 
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Reward', default: [] })
   public rewards: Reward[];
+
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Review', default: [] })
+  public reviews: Review[];
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);

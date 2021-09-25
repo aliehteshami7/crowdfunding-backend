@@ -54,7 +54,8 @@ export class ProjectService {
     const project = await this.projectModel
       .findOne({ _id: projectId })
       .populate('owner')
-      .populate('rewards');
+      .populate('rewards')
+      .populate('reviews');
     if (!project) {
       throw new NotFoundException();
     }
@@ -67,7 +68,8 @@ export class ProjectService {
         state: { $nin: [ProjectStateEnum.START, ProjectStateEnum.REVIEWING] },
       })
       .populate('owner')
-      .populate('rewards');
+      .populate('rewards')
+      .populate('reviews');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -79,7 +81,8 @@ export class ProjectService {
     const projects = await this.projectModel
       .find({})
       .populate('owner')
-      .populate('rewards');
+      .populate('rewards')
+      .populate('reviews');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -91,7 +94,8 @@ export class ProjectService {
     const projects = await this.projectModel
       .find({ owner: currentUser.id })
       .populate('owner')
-      .populate('rewards');
+      .populate('rewards')
+      .populate('reviews');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -111,7 +115,8 @@ export class ProjectService {
     const project = await this.projectModel
       .findOneAndUpdate({ _id: projectId }, { $set: projectUpdateDto })
       .populate('owner')
-      .populate('rewards');
+      .populate('rewards')
+      .populate('reviews');
     if (!project) {
       throw new NotFoundException();
     }
@@ -156,7 +161,8 @@ export class ProjectService {
     project = await this.projectModel
       .findById(projectId)
       .populate('owner')
-      .populate('rewards');
+      .populate('rewards')
+      .populate('reviews');
     return plainToClass(ProjectRo, await project, {
       excludeExtraneousValues: true,
     });
