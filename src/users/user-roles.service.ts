@@ -7,6 +7,7 @@ import { Model } from 'mongoose';
 import { User } from './schemas/user.schema';
 import { Role } from 'src/roles/schemas/role.schema';
 import { ForbiddenException } from '@nestjs/common';
+import { ObjectID } from 'mongodb';
 
 @Injectable()
 export class UserRolesService {
@@ -19,6 +20,12 @@ export class UserRolesService {
 
   async assignRole(userRoleDto: UserRoleDto): Promise<void> {
     const { username, roleIds } = userRoleDto;
+
+    roleIds.forEach((roleId) => {
+      if (!ObjectID.isValid(roleId)) {
+        throw new NotFoundException();
+      }
+    });
 
     const roles = await this.roleModel.find({ _id: { $in: roleIds } });
 
