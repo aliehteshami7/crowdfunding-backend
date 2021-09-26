@@ -19,13 +19,13 @@ export class ProjectUpdateDto {
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public subject: string;
+  public subject?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public institution: string;
+  public institution?: string;
 
   @IsOptional()
   @IsEnum(CategoryEnum)
@@ -33,80 +33,80 @@ export class ProjectUpdateDto {
     enum: CategoryEnum,
     enumName: 'Category',
   })
-  public category: CategoryEnum;
+  public category?: CategoryEnum;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public summary: string;
+  public summary?: string;
 
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => BudgetDto)
   @ApiProperty({ type: [BudgetDto] })
-  public budgets: BudgetDto[];
+  public budgets?: BudgetDto[];
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public budgetReason: string;
+  public budgetReason?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public projectFirstIdea: string;
+  public projectFirstIdea?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public projectMainIdea: string;
+  public projectMainIdea?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public projectGoal: string;
+  public projectGoal?: string;
 
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => TechnicalDescriptiontDto)
   @ApiProperty({ type: [TechnicalDescriptiontDto] })
-  public technicalDescriptions: TechnicalDescriptiontDto[];
+  public technicalDescriptions?: TechnicalDescriptiontDto[];
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public projectAdditionalInfo: string;
+  public projectAdditionalInfo?: string;
 
   @IsOptional()
   @IsString()
   @IsNotEmpty()
   @ApiProperty()
-  public timeDescription: string;
+  public timeDescription?: string;
 
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => TimelinetDto)
   @ApiProperty({ type: [TimelinetDto] })
-  public timelines: TimelinetDto[];
+  public timelines?: TimelinetDto[];
 
   @IsOptional()
   @IsString({ each: true })
   @ApiProperty()
-  public imageUrls: string[];
+  public imageUrls?: string[];
 
   @IsOptional()
   @IsEnum(ProjectStateEnum)
   @ApiProperty({
     enum: ProjectStateEnum,
   })
-  public state: ProjectStateEnum;
+  public state?: ProjectStateEnum;
 }

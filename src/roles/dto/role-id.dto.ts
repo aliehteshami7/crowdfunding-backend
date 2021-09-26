@@ -5,5 +5,5 @@ export class RoleIdDto {
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly id: string;
+  public readonly id?: string;
 }

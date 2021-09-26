@@ -6,20 +6,20 @@ export class UserFindDto {
   @IsString()
   @Matches(/^[a-zA-Z0-9]+$/, { message: 'Bad username' })
   @ApiProperty({ required: false })
-  public readonly username: string;
+  public readonly username?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly firstName: string;
+  public readonly firstName?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly lastName: string;
+  public readonly lastName?: string;
 
   @IsOptional()
   @IsEmail()
   @ApiProperty({ required: false })
-  public readonly email: string;
+  public readonly email?: string;
 }

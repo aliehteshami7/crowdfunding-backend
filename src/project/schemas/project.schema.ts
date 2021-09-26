@@ -15,7 +15,7 @@ export class Project extends Document {
   public subject: string;
 
   @Prop({ type: String, required: false, default: '' })
-  public institution: string;
+  public institution?: string;
 
   @Prop({ type: String, required: true, enum: CategoryEnum })
   public category: CategoryEnum;
@@ -42,7 +42,7 @@ export class Project extends Document {
   public technicalDescriptions: Description[];
 
   @Prop({ type: String, required: false, default: '' })
-  public projectAdditionalInfo: string;
+  public projectAdditionalInfo?: string;
 
   @Prop({ type: String, required: true })
   public timeDescription: string;

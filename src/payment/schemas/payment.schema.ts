@@ -21,7 +21,7 @@ export class Payment extends Document {
   public project: Project;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: 'Reward', required: false })
-  public reward: Reward;
+  public reward?: Reward;
 
   @Prop({
     type: String,
@@ -34,13 +34,13 @@ export class Payment extends Document {
   // ZarrinPal
 
   @Prop({ type: String, required: false })
-  public authority: string;
+  public authority?: string;
 
   @Prop({ type: Number, required: false })
-  public status: number;
+  public status?: number;
 
   @Prop({ type: Number, required: false })
-  public refId: number;
+  public refId?: number;
 }
 
 export const PaymentSchema = SchemaFactory.createForClass(Payment);

@@ -21,22 +21,22 @@ export class User extends Document {
   public isActive: boolean;
 
   @Prop({ type: String, required: false })
-  public avatarAddress: string;
+  public avatarAddress?: string;
 
   @Prop({ type: String, required: false })
-  public description: string;
+  public description?: string;
 
   @Prop({ type: String, required: false })
-  public professionalName: string;
+  public professionalName?: string;
 
   @Prop({ type: String, required: false })
-  public address: string;
+  public address?: string;
 
   @Prop({ type: String, required: false })
-  public website: string;
+  public website?: string;
 
   @Prop({ type: String, required: false })
-  public linkedinAddress: string;
+  public linkedinAddress?: string;
 
   @Prop({ type: String, required: true, unique: true, index: true })
   public email: string;
@@ -45,13 +45,13 @@ export class User extends Document {
   public roles: Role[];
 
   @Prop({ type: String, required: false })
-  public blog: string;
+  public blog?: string;
 
   @Prop({ type: Number, required: false })
-  public resetCode: number;
+  public resetCode?: number;
 
   @Prop({ type: Date, required: false })
-  public resetCodeExpireTime: Date;
+  public resetCodeExpireTime?: Date;
 
   public setPassword: (password: string) => Promise<void>;
 

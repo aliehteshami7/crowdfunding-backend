@@ -7,7 +7,7 @@ export class Reward extends Document {
   public title: string;
 
   @Prop({ type: String, required: false })
-  public description: string;
+  public description?: string;
 
   @Prop({ type: Number, required: true })
   public value: number;

@@ -17,50 +17,50 @@ export class UserUpdateDto {
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly firstName: string;
+  public readonly firstName?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly lastName: string;
+  public readonly lastName?: string;
 
   @IsOptional()
   @IsEmail()
   @ApiProperty({ required: false })
-  public readonly email: string;
+  public readonly email?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly blog: string;
+  public readonly blog?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly avatarAddress: string;
+  public readonly avatarAddress?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly description: string;
+  public readonly description?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly professionalName: string;
+  public readonly professionalName?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly address: string;
+  public readonly address?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly website: string;
+  public readonly website?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly linkedinAddress: string;
+  public readonly linkedinAddress?: string;
 }

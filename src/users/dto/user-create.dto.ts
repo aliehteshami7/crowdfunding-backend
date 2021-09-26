@@ -43,30 +43,30 @@ export class UserCreateDto {
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly avatarAddress: string;
+  public readonly avatarAddress?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly description: string;
+  public readonly description?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly professionalName: string;
+  public readonly professionalName?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly address: string;
+  public readonly address?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly website: string;
+  public readonly website?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty()
-  public readonly linkedinAddress: string;
+  public readonly linkedinAddress?: string;
 }
