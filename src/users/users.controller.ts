@@ -83,11 +83,13 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: "Get user's profile" })
   @ApiOkResponse({ type: UserRo })
-  async userProfile(@CurrentUser() currentUser: User): Promise<UsersRo> {
-    return await this.userService.find({
-      ...new UserFindDto(),
-      username: currentUser.username,
-    });
+  async userProfile(@CurrentUser() currentUser: User): Promise<UserRo> {
+    return (
+      await this.userService.find({
+        ...new UserFindDto(),
+        username: currentUser.username,
+      })
+    ).users[0];
   }
 
   @Post('profile')
