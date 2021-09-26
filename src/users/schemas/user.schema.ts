@@ -14,7 +14,7 @@ export class User extends Document {
   @Prop({ type: String, required: true, unique: true, index: true })
   public username: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: true, default: 'NO_PASS' })
   public password: string;
 
   @Prop({ type: Boolean, required: true, default: false })
