@@ -13,7 +13,6 @@ export class UpdateRoleDto {
   @IsNotEmpty()
   @IsString()
   @Expose({ name: '_id' })
-  @Expose({ name: 'id' })
   @Type(() => String)
   @ApiProperty()
   public readonly id: string;

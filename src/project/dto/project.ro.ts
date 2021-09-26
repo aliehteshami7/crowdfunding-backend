@@ -11,7 +11,6 @@ import { TimelinetDto } from './timeline.dto';
 
 export class ProjectRo {
   @Expose({ name: '_id' })
-  @Expose({ name: 'id' })
   @Type(() => String)
   @ApiProperty()
   public id: string;

@@ -4,7 +4,6 @@ import { PermissionTag } from '../enum/permission-tag.enum';
 
 export class RoleRo {
   @Expose({ name: '_id' })
-  @Expose({ name: 'id' })
   @Type(() => String)
   @ApiProperty()
   public id: string;

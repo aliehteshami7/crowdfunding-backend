@@ -3,7 +3,6 @@ import { Expose, Type } from 'class-transformer';
 
 export class RewardRo {
   @Expose({ name: '_id' })
-  @Expose({ name: 'id' })
   @Type(() => String)
   @ApiProperty()
   public id: string;
