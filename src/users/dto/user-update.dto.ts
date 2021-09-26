@@ -33,41 +33,41 @@ export class UserUpdateDto {
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public readonly blog?: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public readonly avatarAddress?: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public readonly description?: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public readonly professionalName?: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public readonly address?: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public readonly website?: string;
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public readonly linkedinAddress?: string;
 
   @IsOptional()
   @Type(() => MailConfigDto)
-  @ApiProperty({ type: MailConfigDto })
+  @ApiProperty({ type: MailConfigDto, required: false })
   public readonly mailConfig?: MailConfigDto;
 }

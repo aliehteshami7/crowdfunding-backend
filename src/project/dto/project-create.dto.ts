@@ -21,7 +21,7 @@ export class ProjectCreateDto {
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public institution?: string;
 
   @IsEnum(CategoryEnum)
@@ -70,7 +70,7 @@ export class ProjectCreateDto {
 
   @IsOptional()
   @IsString()
-  @ApiProperty()
+  @ApiProperty({ required: false })
   public projectAdditionalInfo?: string;
 
   @IsString()
