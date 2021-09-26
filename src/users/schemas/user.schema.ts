@@ -38,7 +38,7 @@ export class User extends Document {
   @Prop({ type: String, required: false })
   public linkedinAddress: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: true, unique: true, index: true })
   public email: string;
 
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Role', default: [] })
