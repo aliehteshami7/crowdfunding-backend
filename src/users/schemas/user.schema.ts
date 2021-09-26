@@ -2,6 +2,7 @@ import * as bcrypt from 'bcrypt';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Role } from 'src/roles/schemas/role.schema';
+import { MailConfig } from './mail-config.schema';
 
 @Schema({ timestamps: { createdAt: 'createdAt' } })
 export class User extends Document {
@@ -52,6 +53,14 @@ export class User extends Document {
 
   @Prop({ type: Date, required: false })
   public resetCodeExpireTime?: Date;
+
+  @Prop({
+    type: MailConfig,
+    ref: 'MailConfig',
+    required: true,
+    default: {},
+  })
+  public mailConfig: MailConfig;
 
   public setPassword: (password: string) => Promise<void>;
 

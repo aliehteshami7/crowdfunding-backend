@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -6,6 +7,7 @@ import {
   IsString,
   Matches,
 } from 'class-validator';
+import { MailConfigDto } from './mail-config.dto';
 
 export class UserUpdateDto {
   @IsNotEmpty()
@@ -63,4 +65,9 @@ export class UserUpdateDto {
   @IsString()
   @ApiProperty()
   public readonly linkedinAddress?: string;
+
+  @IsOptional()
+  @Type(() => MailConfigDto)
+  @ApiProperty({ type: MailConfigDto })
+  public readonly mailConfig?: MailConfigDto;
 }

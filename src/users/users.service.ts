@@ -50,7 +50,7 @@ export class UsersService {
       if (err.name === 'MongoError' && err.code === 11000) {
         // Duplicate username
         throw new UnprocessableEntityException({
-          message: 'Username already exists!',
+          message: 'Username or Email already exists!',
         });
       }
       throw err;

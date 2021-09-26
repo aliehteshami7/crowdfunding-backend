@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Type } from 'class-transformer';
+import { MailConfigDto } from './mail-config.dto';
 import { UserRoleRo } from './user-role.ro';
 
 export class UserRo {
@@ -51,4 +52,9 @@ export class UserRo {
   @Expose()
   @ApiProperty()
   public readonly linkedinAddress: string;
+
+  @Expose()
+  @Type(() => MailConfigDto)
+  @ApiProperty({ type: MailConfigDto })
+  public readonly mailConfig?: MailConfigDto;
 }
