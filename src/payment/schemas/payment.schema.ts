@@ -16,7 +16,7 @@ export class Payment extends Document {
   @Prop({
     type: MongooseSchema.Types.ObjectId,
     ref: 'Project',
-    required: false,
+    required: true,
   })
   public project: Project;
 
