@@ -47,6 +47,12 @@ export class User extends Document {
   @Prop({ type: String, required: false })
   public blog: string;
 
+  @Prop({ type: Number, required: false })
+  public resetCode: number;
+
+  @Prop({ type: Date, required: false })
+  public resetCodeExpireTime: Date;
+
   public setPassword: (password: string) => Promise<void>;
 
   public comparePassword: (attempt: string) => Promise<boolean>;

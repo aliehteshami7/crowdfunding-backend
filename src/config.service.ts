@@ -57,6 +57,17 @@ class ConfigService {
         this.getValue('PAYMENT_TEST_ENVIRONMENT').toLowerCase() === 'true',
     };
   }
+
+  public getGmailAuth() {
+    return {
+      user: this.getValue('GMAIL_USERNAME'),
+      pass: this.getValue('GMAIL_PASSWORD'),
+    };
+  }
+
+  public getResetPasswordUrl() {
+    return this.getValue('RESET_PASSWORD_URL');
+  }
 }
 
 const configService = new ConfigService(process.env).ensureValues([
@@ -74,6 +85,9 @@ const configService = new ConfigService(process.env).ensureValues([
   'ZARRINPAL_MERCHANT_ID',
   'PAYMENT_CALLBACK_URL',
   'PAYMENT_TEST_ENVIRONMENT',
+  'GMAIL_USERNAME',
+  'GMAIL_PASSWORD',
+  'RESET_PASSWORD_URL',
 ]);
 
 export { configService };

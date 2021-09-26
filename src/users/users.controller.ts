@@ -32,6 +32,9 @@ import { PermissionTag } from 'src/roles/enum/permission-tag.enum';
 import { Permissions } from 'src/roles/decorators/permissions.decorator';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { User } from './schemas/user.schema';
+import { MailResetPasswordDto } from './dto/mail-reset-password.dto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -150,5 +153,51 @@ export class UsersController {
     @Body() checkPermissionDto: CheckPermissionDto,
   ): Promise<void> {
     return await this.userRolesService.checkPermission(checkPermissionDto);
+  }
+
+  @Post('mailResetPassword')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Send verificatoin email for reset password' })
+  async mailResetPassword(
+    @Body() mailResetPasswordDto: MailResetPasswordDto,
+  ): Promise<void> {
+    return await this.userService.sendResetPasswordMail(mailResetPasswordDto);
+  }
+
+  @Get('checkResetPasswordCred')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Check if reset password credentials are valid' })
+  async checkResetPasswordCred(
+    @Query() resetPasswordDto: ResetPasswordDto,
+  ): Promise<boolean> {
+    return await this.userService.checkResetPasswordCred(resetPasswordDto);
+  }
+
+  @Post('resetPassword')
+  @HttpCode(200)
+  @ApiOperation({ summary: 'Reset passowrd' })
+  async resetPassword(
+    @Query() resetPasswordDto: ResetPasswordDto,
+    @Body() changePasswordDto: ChangePasswordDto,
+  ): Promise<void> {
+    return await this.userService.resetPassword(
+      resetPasswordDto,
+      changePasswordDto,
+    );
+  }
+
+  @Post('changePassword')
+  @HttpCode(200)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Change passowrd' })
+  async changePassword(
+    @Body() changePasswordDto: ChangePasswordDto,
+    @CurrentUser() currentUser: User,
+  ): Promise<void> {
+    return await this.userService.changePassword(
+      changePasswordDto,
+      currentUser,
+    );
   }
 }

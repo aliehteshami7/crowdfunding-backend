@@ -15,13 +15,26 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PreconditionFailedException } from '@nestjs/common';
 import { UnauthorizedException } from '@nestjs/common';
+import * as nodemailer from 'nodemailer';
+import { configService } from 'src/config.service';
+import { MailResetPasswordDto } from './dto/mail-reset-password.dto';
+import * as crypto from 'crypto';
+import { ResetPasswordDto } from './dto/reset-password.dto';
+import { ChangePasswordDto } from './dto/change-password.dto';
 
 @Injectable()
 export class UsersService {
+  private readonly mailService: nodemailer.Transporter;
+
   constructor(
     @InjectModel(User.name)
     private userModel: Model<User>,
-  ) {}
+  ) {
+    this.mailService = nodemailer.createTransport({
+      service: 'gmail',
+      auth: configService.getGmailAuth(),
+    });
+  }
 
   async create(userCreateDto: UserCreateDto): Promise<UserRo> {
     try {
@@ -115,5 +128,83 @@ export class UsersService {
     }
 
     return plainToClass(UserRo, user, { excludeExtraneousValues: true });
+  }
+
+  async changePassword(
+    changePasswordDto: ChangePasswordDto,
+    user: User,
+  ): Promise<void> {
+    await user.setPassword(changePasswordDto.password);
+    await user.save();
+  }
+
+  async checkResetPasswordCred(
+    resetPassword: ResetPasswordDto,
+  ): Promise<boolean> {
+    const user = await this.userModel.findOne({ email: resetPassword.email });
+    if (!user) {
+      return false;
+    }
+    const now = new Date();
+    if (
+      now < user.resetCodeExpireTime &&
+      resetPassword.resetCode === user.resetCode
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  async resetPassword(
+    resetPassword: ResetPasswordDto,
+    changePasswordDto: ChangePasswordDto,
+  ): Promise<void> {
+    const valid = await this.checkResetPasswordCred(resetPassword);
+    if (valid) {
+      const user = await this.userModel.findOne({ email: resetPassword.email });
+      this.changePassword(changePasswordDto, user);
+      user.resetCodeExpireTime = new Date(0);
+      await user.save();
+    }
+    return;
+  }
+
+  async sendResetPasswordMail(
+    mailResetPasswordDto: MailResetPasswordDto,
+  ): Promise<void> {
+    const user = await this.userModel.findOne({
+      email: mailResetPasswordDto.email,
+    });
+    if (!user) {
+      return;
+    }
+
+    const resetCode = await crypto.randomInt(0, 1000000);
+    let date = new Date().getTime();
+    date += 3 * 60 * 60 * 1000;
+    const resetCodeExpireTime = new Date(date);
+
+    try {
+      user.resetCode = resetCode;
+      user.resetCodeExpireTime = resetCodeExpireTime;
+      user.save();
+    } catch (err) {
+      console.log(err);
+    }
+
+    const mail = {
+      from: configService.getGmailAuth().user,
+      to: user.email,
+      subject: 'Reset Password',
+      text: `If you want to reset your password, visit:\n${configService.getResetPasswordUrl()}?email=${
+        user.email
+      }&resetCode=${resetCode}\nLink will expire in 3 hours`,
+    };
+
+    try {
+      this.mailService.sendMail(mail);
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
