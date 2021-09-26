@@ -239,5 +239,12 @@ export class ProjectService {
     }
 
     await review.save();
+    await project.update({
+      $push: {
+        reviews: {
+          ...review,
+        },
+      },
+    });
   }
 }
