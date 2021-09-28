@@ -49,7 +49,7 @@ export class UserUpdateDto {
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly professionalName?: string;
+  public readonly headline?: string;
 
   @IsOptional()
   @IsString()

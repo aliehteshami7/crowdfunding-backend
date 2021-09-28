@@ -53,7 +53,7 @@ export class UserCreateDto {
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly professionalName?: string;
+  public readonly headline?: string;
 
   @IsOptional()
   @IsString()

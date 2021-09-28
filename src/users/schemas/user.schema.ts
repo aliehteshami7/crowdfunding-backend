@@ -28,7 +28,7 @@ export class User extends Document {
   public description?: string;
 
   @Prop({ type: String, required: false })
-  public professionalName?: string;
+  public headline?: string;
 
   @Prop({ type: String, required: false })
   public address?: string;

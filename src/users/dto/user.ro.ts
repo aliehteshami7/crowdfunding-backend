@@ -39,7 +39,7 @@ export class UserRo {
 
   @Expose()
   @ApiProperty()
-  public readonly professionalName: string;
+  public readonly headline: string;
 
   @Expose()
   @ApiProperty()
