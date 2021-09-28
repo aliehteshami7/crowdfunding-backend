@@ -2,11 +2,13 @@ import {
   BadRequestException,
   Controller,
   Get,
+  Inject,
   NotFoundException,
   Param,
   Post,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -19,8 +21,17 @@ import { getDiskStorage } from './disk-storage';
 import { UploadMediaRo } from './dto/upload-media.ro';
 import { extNames, FileType, getFilter } from './file-type-filter';
 import 'multer';
-import { ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiCreatedResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import * as fs from 'fs';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { UsersService } from 'src/users/users.service';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
+import { User } from 'src/users/schemas/user.schema';
 
 const appDir = join(dirname(require.main.filename), '..');
 const mediaPath = join(appDir, configService.getMediaPath());
@@ -29,6 +40,11 @@ const avatarPath = join(appDir, configService.getAvatarPath());
 @ApiTags('Media')
 @Controller('media')
 export class MediaController {
+  constructor(
+    @Inject(UsersService)
+    private readonly usersService: UsersService,
+  ) {}
+
   @Get(':mediaName')
   @ApiOperation({ summary: 'Get media by name' })
   getMedia(@Param('mediaName') mediaName: string, @Res() res: Response) {
@@ -58,6 +74,8 @@ export class MediaController {
       },
     }),
   )
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
   uploadFile(@UploadedFile() file: Express.Multer.File): UploadMediaRo {
     if (!file) {
       throw new BadRequestException('File not found!');
@@ -82,7 +100,6 @@ export class MediaController {
 
   @Post('avatar')
   @ApiOperation({ summary: 'Upload avatar' })
-  @ApiCreatedResponse({ type: UploadMediaRo })
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: getFilter(FileType.IMAGE),
@@ -92,13 +109,19 @@ export class MediaController {
       },
     }),
   )
-  uploadAvatar(@UploadedFile() file: Express.Multer.File): UploadMediaRo {
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  async uploadAvatar(
+    @UploadedFile() file: Express.Multer.File,
+    @CurrentUser() currentUser: User,
+  ): Promise<void> {
     if (!file) {
       throw new BadRequestException('Avatar not found!');
     }
     const fileName = file.filename.replace(/_([^_]*)$/, '.$1');
-    return plainToClass(UploadMediaRo, {
-      path: 'media/avatar/' + fileName,
+    await this.usersService.update({
+      avatarAddress: fileName,
+      username: currentUser.username,
     });
   }
 }
