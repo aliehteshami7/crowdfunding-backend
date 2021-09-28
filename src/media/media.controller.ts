@@ -114,14 +114,18 @@ export class MediaController {
   async uploadAvatar(
     @UploadedFile() file: Express.Multer.File,
     @CurrentUser() currentUser: User,
-  ): Promise<void> {
+  ) {
     if (!file) {
       throw new BadRequestException('Avatar not found!');
     }
     const fileName = file.filename.replace(/_([^_]*)$/, '.$1');
+    const avatarAddress = 'media/avatar/' + fileName;
     await this.usersService.update({
-      avatarAddress: fileName,
+      avatarAddress: avatarAddress,
       username: currentUser.username,
+    });
+    return plainToClass(UploadMediaRo, {
+      path: avatarAddress,
     });
   }
 }
