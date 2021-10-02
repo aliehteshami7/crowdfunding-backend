@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Expose, Type } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
+import { RolesController } from 'src/roles/roles.controller';
 import { MailConfigDto } from './mail-config.dto';
 import { UserRoleRo } from './user-role.ro';
 
@@ -20,10 +21,18 @@ export class UserRo {
   @ApiProperty()
   public readonly email: string;
 
+  @Expose({ name: 'roles' })
   @Type(() => UserRoleRo)
-  @Expose()
-  @ApiProperty({ type: [UserRoleRo] })
-  public readonly roles: UserRoleRo[];
+  @Transform(({ value }: { value: UserRoleRo[] }) => {
+    const roleNames = [];
+    value.forEach((element) => {
+      roleNames.push(element.name);
+    });
+    return roleNames;
+  })
+  @Type(() => String)
+  @ApiProperty()
+  public readonly roleNames: string[];
 
   @Expose()
   @ApiProperty()
