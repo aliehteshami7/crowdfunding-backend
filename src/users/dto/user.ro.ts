@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform, Type } from 'class-transformer';
-import { RolesController } from 'src/roles/roles.controller';
 import { MailConfigDto } from './mail-config.dto';
 import { UserRoleRo } from './user-role.ro';
 
@@ -25,7 +24,7 @@ export class UserRo {
   @Type(() => UserRoleRo)
   @Transform(({ value }: { value: UserRoleRo[] }) => {
     const roleNames = [];
-    value.forEach((element) => {
+    value?.forEach((element) => {
       roleNames.push(element.name);
     });
     return roleNames;
