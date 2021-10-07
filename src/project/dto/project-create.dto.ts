@@ -10,8 +10,8 @@ import {
 } from 'class-validator';
 import { CategoryEnum } from '../enum/category.enum';
 import { BudgetDto } from './budget.dto';
-import { TechnicalDescriptiontDto } from './technical-description.dto';
-import { TimelinetDto } from './timeline.dto';
+import { TechnicalDescriptionDto } from './technical-description.dto';
+import { TimelineDto } from './timeline.dto';
 
 export class ProjectCreateDto {
   @IsString()
@@ -64,9 +64,9 @@ export class ProjectCreateDto {
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TechnicalDescriptiontDto)
-  @ApiProperty({ type: [TechnicalDescriptiontDto] })
-  public technicalDescriptions: TechnicalDescriptiontDto[];
+  @Type(() => TechnicalDescriptionDto)
+  @ApiProperty({ type: [TechnicalDescriptionDto] })
+  public technicalDescriptions: TechnicalDescriptionDto[];
 
   @IsOptional()
   @IsString()
@@ -80,9 +80,9 @@ export class ProjectCreateDto {
 
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TimelinetDto)
-  @ApiProperty({ type: [TimelinetDto] })
-  public timelines: TimelinetDto[];
+  @Type(() => TimelineDto)
+  @ApiProperty({ type: [TimelineDto] })
+  public timelines: TimelineDto[];
 
   @IsString({ each: true })
   @ApiProperty()

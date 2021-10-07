@@ -6,8 +6,8 @@ import { ProjectStateEnum } from '../enum/project-state.enum';
 import { BudgetDto } from './budget.dto';
 import { ReviewRo } from './review.ro';
 import { RewardRo } from './reward.ro';
-import { TechnicalDescriptiontDto } from './technical-description.dto';
-import { TimelinetDto } from './timeline.dto';
+import { TechnicalDescriptionDto } from './technical-description.dto';
+import { TimelineDto } from './timeline.dto';
 
 export class ProjectRo {
   @Expose({ name: '_id' })
@@ -54,10 +54,10 @@ export class ProjectRo {
   @Expose()
   public projectGoal: string;
 
-  @Type(() => TechnicalDescriptiontDto)
-  @ApiProperty({ type: [TechnicalDescriptiontDto] })
+  @Type(() => TechnicalDescriptionDto)
+  @ApiProperty({ type: [TechnicalDescriptionDto] })
   @Expose()
-  public technicalDescriptions: TechnicalDescriptiontDto[];
+  public technicalDescriptions: TechnicalDescriptionDto[];
 
   @ApiProperty()
   @Expose()
@@ -67,10 +67,10 @@ export class ProjectRo {
   @Expose()
   public timeDescription: string;
 
-  @Type(() => TimelinetDto)
-  @ApiProperty({ type: [TimelinetDto] })
+  @Type(() => TimelineDto)
+  @ApiProperty({ type: [TimelineDto] })
   @Expose()
-  public timelines: TimelinetDto[];
+  public timelines: TimelineDto[];
 
   @ApiProperty()
   @Expose()

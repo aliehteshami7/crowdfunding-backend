@@ -11,8 +11,8 @@ import {
 import { CategoryEnum } from '../enum/category.enum';
 import { ProjectStateEnum } from '../enum/project-state.enum';
 import { BudgetDto } from './budget.dto';
-import { TechnicalDescriptiontDto } from './technical-description.dto';
-import { TimelinetDto } from './timeline.dto';
+import { TechnicalDescriptionDto } from './technical-description.dto';
+import { TimelineDto } from './timeline.dto';
 
 export class ProjectUpdateDto {
   @IsOptional()
@@ -76,9 +76,9 @@ export class ProjectUpdateDto {
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TechnicalDescriptiontDto)
-  @ApiProperty({ type: [TechnicalDescriptiontDto], required: false })
-  public technicalDescriptions?: TechnicalDescriptiontDto[];
+  @Type(() => TechnicalDescriptionDto)
+  @ApiProperty({ type: [TechnicalDescriptionDto], required: false })
+  public technicalDescriptions?: TechnicalDescriptionDto[];
 
   @IsOptional()
   @IsString()
@@ -95,9 +95,9 @@ export class ProjectUpdateDto {
   @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
-  @Type(() => TimelinetDto)
-  @ApiProperty({ type: [TimelinetDto], required: false })
-  public timelines?: TimelinetDto[];
+  @Type(() => TimelineDto)
+  @ApiProperty({ type: [TimelineDto], required: false })
+  public timelines?: TimelineDto[];
 
   @IsOptional()
   @IsString({ each: true })
