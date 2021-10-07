@@ -23,8 +23,12 @@ import { extNames, FileType, getFilter } from './file-type-filter';
 import 'multer';
 import {
   ApiBearerAuth,
+  ApiBody,
+  ApiConsumes,
   ApiCreatedResponse,
+  ApiOkResponse,
   ApiOperation,
+  ApiProduces,
   ApiTags,
 } from '@nestjs/swagger';
 import * as fs from 'fs';
@@ -47,6 +51,13 @@ export class MediaController {
 
   @Get(':mediaName')
   @ApiOperation({ summary: 'Get media by name' })
+  @ApiProduces('image/*', 'video/*')
+  @ApiOkResponse({
+    schema: {
+      type: 'string',
+      format: 'binary',
+    },
+  })
   getMedia(@Param('mediaName') mediaName: string, @Res() res: Response) {
     const fileName = mediaName.replace(/.([^.]*)$/, '_$1');
     const filePath = join(mediaPath, fileName);
@@ -63,6 +74,18 @@ export class MediaController {
   }
 
   @Post()
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @ApiOperation({ summary: 'Upload media' })
   @ApiCreatedResponse({ type: UploadMediaRo })
   @UseInterceptors(
@@ -88,6 +111,13 @@ export class MediaController {
 
   @Get('avatar/:avatarName')
   @ApiOperation({ summary: 'Get avatar by name' })
+  @ApiProduces('image/*')
+  @ApiOkResponse({
+    schema: {
+      type: 'string',
+      format: 'binary',
+    },
+  })
   getAvatar(@Param('avatarName') avatarName: string, @Res() res: Response) {
     const fileName = avatarName.replace(/.([^.]*)$/, '_$1');
     const filePath = join(avatarPath, fileName);
@@ -99,6 +129,18 @@ export class MediaController {
   }
 
   @Post('avatar')
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        file: {
+          type: 'string',
+          format: 'binary',
+        },
+      },
+    },
+  })
   @ApiOperation({ summary: 'Upload avatar' })
   @ApiCreatedResponse({ type: UploadMediaRo })
   @UseInterceptors(
