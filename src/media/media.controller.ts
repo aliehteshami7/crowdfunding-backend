@@ -100,6 +100,7 @@ export class MediaController {
 
   @Post('avatar')
   @ApiOperation({ summary: 'Upload avatar' })
+  @ApiCreatedResponse({ type: UploadMediaRo })
   @UseInterceptors(
     FileInterceptor('file', {
       fileFilter: getFilter(FileType.IMAGE),
@@ -114,7 +115,7 @@ export class MediaController {
   async uploadAvatar(
     @UploadedFile() file: Express.Multer.File,
     @CurrentUser() currentUser: User,
-  ) {
+  ): Promise<UploadMediaRo> {
     if (!file) {
       throw new BadRequestException('Avatar not found!');
     }
