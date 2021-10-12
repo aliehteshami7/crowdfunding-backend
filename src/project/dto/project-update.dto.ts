@@ -3,7 +3,6 @@ import { Type } from 'class-transformer';
 import {
   IsArray,
   IsEnum,
-  IsNotEmpty,
   IsOptional,
   IsString,
   ValidateNested,
@@ -17,13 +16,11 @@ import { TimelineDto } from './timeline.dto';
 export class ProjectUpdateDto {
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public subject?: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public institution?: string;
 
@@ -38,7 +35,6 @@ export class ProjectUpdateDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public summary?: string;
 
@@ -51,25 +47,21 @@ export class ProjectUpdateDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public budgetReason?: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public projectFirstIdea?: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public projectMainIdea?: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public projectGoal?: string;
 
@@ -82,13 +74,11 @@ export class ProjectUpdateDto {
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public projectAdditionalInfo?: string;
 
   @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @ApiProperty({ required: false })
   public timeDescription?: string;
 
