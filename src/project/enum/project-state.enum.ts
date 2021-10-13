@@ -1,4 +1,5 @@
 export enum ProjectStateEnum {
+  REJECTED = 'REJECTED',
   FAILED = 'FAILED',
   FINISHED = 'FINISHED',
   FINANCING = 'FINANCING',

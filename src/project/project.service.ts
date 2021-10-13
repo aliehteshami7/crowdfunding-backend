@@ -69,7 +69,13 @@ export class ProjectService {
   async find(): Promise<ProjectsRo> {
     const projects = await this.projectModel
       .find({
-        state: { $nin: [ProjectStateEnum.START, ProjectStateEnum.REVIEWING] },
+        state: {
+          $nin: [
+            ProjectStateEnum.START,
+            ProjectStateEnum.REVIEWING,
+            ProjectStateEnum.REJECTED,
+          ],
+        },
       })
       .populate('owner')
       .populate('rewards')
