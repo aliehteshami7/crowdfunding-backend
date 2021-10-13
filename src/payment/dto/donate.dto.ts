@@ -12,7 +12,6 @@ export class DonateDto {
   public readonly projectId: string;
 
   @IsUrl()
-  @IsNotEmpty()
   @ApiProperty()
   public readonly callbackUrl: string;
 }

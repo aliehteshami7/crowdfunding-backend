@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsUrl } from 'class-validator';
+import { IsEmail, IsUrl } from 'class-validator';
 
 export class MailResetPasswordDto {
   @IsEmail()
@@ -7,7 +7,6 @@ export class MailResetPasswordDto {
   public readonly email: string;
 
   @IsUrl()
-  @IsNotEmpty()
   @ApiProperty()
   public readonly callbackUrl: string;
 }
