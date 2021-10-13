@@ -125,7 +125,12 @@ export class PaymentService {
 
     const description = `Pay ${payment.amount} tomans for reward of project ${project.subject}`;
 
-    return this.generatePaymentLink(payment.amount, description, payment.id);
+    return this.generatePaymentLink(
+      payment.amount,
+      description,
+      payment.id,
+      payRewardDto.callbackUrl,
+    );
   }
 
   async donate(
@@ -151,17 +156,23 @@ export class PaymentService {
 
     const description = `Donate ${payment.amount} tomans to project ${project.subject}`;
 
-    return this.generatePaymentLink(payment.amount, description, payment.id);
+    return this.generatePaymentLink(
+      payment.amount,
+      description,
+      payment.id,
+      donateDto.callbackUrl,
+    );
   }
 
   async generatePaymentLink(
     amount: number,
     description: string,
-    paymentId,
+    paymentId: ObjectID,
+    callbackUrl: string,
   ): Promise<PaymentLinkRo> {
     const paymentRequestInput: PaymentRequestInput = {
       Amount: amount,
-      CallbackURL: configService.getZarrinpalConfig().callbackUrl,
+      CallbackURL: callbackUrl,
       Description: description,
     };
     const paymentRequestOutput = await this.ZARRINPAL.PaymentRequest(

@@ -52,7 +52,6 @@ class ConfigService {
   public getZarrinpalConfig() {
     return {
       merchantId: this.getValue('ZARRINPAL_MERCHANT_ID'),
-      callbackUrl: this.getValue('PAYMENT_CALLBACK_URL'),
       testEnv:
         this.getValue('PAYMENT_TEST_ENVIRONMENT').toLowerCase() === 'true',
     };
@@ -83,7 +82,6 @@ const configService = new ConfigService(process.env).ensureValues([
   'MEDIA_PATH',
   'AVATAR_PATH',
   'ZARRINPAL_MERCHANT_ID',
-  'PAYMENT_CALLBACK_URL',
   'PAYMENT_TEST_ENVIRONMENT',
   'GMAIL_USERNAME',
   'GMAIL_PASSWORD',

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, IsUrl } from 'class-validator';
 
 export class DonateDto {
   @IsNumber()
@@ -7,6 +7,12 @@ export class DonateDto {
   public readonly amount: number;
 
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
   public readonly projectId: string;
+
+  @IsUrl()
+  @IsNotEmpty()
+  @ApiProperty()
+  public readonly callbackUrl: string;
 }
