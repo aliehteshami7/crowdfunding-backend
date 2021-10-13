@@ -88,12 +88,11 @@ export class BlogController {
     summary:
       'Update information of an existing blog, user should be admin or writer',
   })
-  @ApiOkResponse({ type: BlogRo })
   async update(
     @Param('blogId') blogId: string,
     @Body() blogDto: BlogDto,
     @CurrentUser() currentUser: User,
-  ): Promise<BlogRo> {
+  ): Promise<void> {
     return await this.blogService.update(blogId, blogDto, currentUser);
   }
 

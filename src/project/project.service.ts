@@ -132,7 +132,7 @@ export class ProjectService {
     projectId: string,
     projectUpdateDto: ProjectUpdateDto,
     currentUser: User,
-  ): Promise<ProjectRo> {
+  ): Promise<void> {
     if (!ObjectID.isValid(projectId)) {
       throw new NotFoundException();
     }
@@ -145,9 +145,6 @@ export class ProjectService {
     if (!project) {
       throw new NotFoundException();
     }
-    return plainToClass(ProjectRo, await project, {
-      excludeExtraneousValues: true,
-    });
   }
 
   async delete(projectId: string): Promise<void> {

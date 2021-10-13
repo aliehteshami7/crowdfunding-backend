@@ -102,12 +102,11 @@ export class ProjectController {
     summary:
       'Update information of an existing project, user should be admin or owner',
   })
-  @ApiOkResponse({ type: ProjectRo })
   async update(
     @Param('projectId') projectId: string,
     @Body() projectUpdateDto: ProjectUpdateDto,
     @CurrentUser() currentUser: User,
-  ): Promise<ProjectRo> {
+  ): Promise<void> {
     return await this.projectService.update(
       projectId,
       projectUpdateDto,

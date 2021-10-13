@@ -79,7 +79,7 @@ export class BlogService {
     blogId: string,
     blogDto: BlogDto,
     currentUser: User,
-  ): Promise<BlogRo> {
+  ): Promise<void> {
     if (!ObjectID.isValid(blogId)) {
       throw new NotFoundException();
     }
@@ -90,9 +90,6 @@ export class BlogService {
     if (!blog) {
       throw new NotFoundException();
     }
-    return plainToClass(BlogRo, await blog, {
-      excludeExtraneousValues: true,
-    });
   }
 
   async delete(blogId: string): Promise<void> {
