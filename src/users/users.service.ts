@@ -196,9 +196,7 @@ export class UsersService {
       from: configService.getGmailAuth().user,
       to: user.email,
       subject: 'Reset Password',
-      text: `If you want to reset your password, visit:\n${configService.getResetPasswordUrl()}?email=${
-        user.email
-      }&resetCode=${resetCode}\nLink will expire in 3 hours`,
+      text: `If you want to reset your password, visit:\n${mailResetPasswordDto.callbackUrl}?email=${user.email}&resetCode=${resetCode}\nLink will expire in 3 hours`,
     };
 
     try {

@@ -20,7 +20,8 @@ export class UserCreateDto {
   @MinLength(8)
   @MaxLength(20)
   @Matches(/^((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z])[^\s]{8,20}$/, {
-    message: 'password too weak',
+    message:
+      'Password is too weak. It should containe both lower case and upper case characters and non-word or numeric characters.',
   })
   @ApiProperty()
   public readonly password: string;

@@ -63,10 +63,6 @@ class ConfigService {
       pass: this.getValue('GMAIL_PASSWORD'),
     };
   }
-
-  public getResetPasswordUrl() {
-    return this.getValue('RESET_PASSWORD_URL');
-  }
 }
 
 const configService = new ConfigService(process.env).ensureValues([
@@ -85,7 +81,6 @@ const configService = new ConfigService(process.env).ensureValues([
   'PAYMENT_TEST_ENVIRONMENT',
   'GMAIL_USERNAME',
   'GMAIL_PASSWORD',
-  'RESET_PASSWORD_URL',
 ]);
 
 export { configService };
