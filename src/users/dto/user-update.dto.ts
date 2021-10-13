@@ -34,11 +34,6 @@ export class UserUpdateDto {
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  public readonly blog?: string;
-
-  @IsOptional()
-  @IsString()
-  @ApiProperty({ required: false })
   public readonly avatarAddress?: string;
 
   @IsOptional()

@@ -35,10 +35,6 @@ export class UserRo {
 
   @Expose()
   @ApiProperty()
-  public readonly blog: string;
-
-  @Expose()
-  @ApiProperty()
   public readonly avatarAddress: string;
 
   @Expose()
