@@ -220,6 +220,16 @@ export class PaymentService {
 
     payment.status = paymentVerificationOutput.status;
 
+    if (payment.status == 100) {
+      const projectId = payment.project;
+      this.projectModel
+        .updateOne(
+          { _id: projectId },
+          { $inc: { totalPayedMoney: payment.amount } },
+        )
+        .exec();
+    }
+
     if (payment.status == 100 || payment.status == 101) {
       payment.state = PaymentStateEnum.SUCCESSFUL;
       payment.refId = paymentVerificationOutput.RefID;

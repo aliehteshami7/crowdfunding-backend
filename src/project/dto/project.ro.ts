@@ -96,4 +96,8 @@ export class ProjectRo {
   @ApiProperty({ type: [ReviewRo] })
   @Expose()
   public reviews: ReviewRo[];
+
+  @ApiProperty()
+  @Expose()
+  public totalPayedMoney: number;
 }

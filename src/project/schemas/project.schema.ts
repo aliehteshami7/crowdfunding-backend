@@ -68,6 +68,9 @@ export class Project extends Document {
 
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: 'Review', default: [] })
   public reviews: Review[];
+
+  @Prop({ type: Number, required: true, default: 0 })
+  public totalPayedMoney: number;
 }
 
 export const ProjectSchema = SchemaFactory.createForClass(Project);
