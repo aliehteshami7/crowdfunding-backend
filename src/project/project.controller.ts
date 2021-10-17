@@ -149,7 +149,7 @@ export class ProjectController {
   @Post(':projectId/review')
   @ApiOperation({
     summary:
-      "Review a project, It's for reviewer. If reviewr's review exists, then it updates it",
+      "Review a project. If reviewer's review exists, then it updates it",
   })
   async addReview(
     @Param('projectId') projectId: string,
