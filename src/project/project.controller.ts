@@ -143,8 +143,8 @@ export class ProjectController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(PermissionsGuard)
-  @Permissions(PermissionTag.REVIEWER)
+  // @UseGuards(PermissionsGuard)
+  // @Permissions(PermissionTag.REVIEWER)
   @UseGuards(JwtAuthGuard)
   @Post(':projectId/review')
   @ApiOperation({
