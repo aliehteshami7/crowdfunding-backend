@@ -257,4 +257,26 @@ export class ProjectService {
       await review.save();
     }
   }
+
+  async removeReview(projectId: string, reviewId: string): Promise<void> {
+    if (!ObjectID.isValid(projectId)) {
+      throw new NotFoundException();
+    }
+    if (!ObjectID.isValid(reviewId)) {
+      throw new NotFoundException();
+    }
+    const project = await this.projectModel
+      .findById(projectId)
+      .populate('reviews');
+
+    console.log(JSON.stringify(project.reviews, null, 2));
+
+    const review = project.reviews.find((review) => review._id == reviewId);
+
+    if (!review) {
+      throw new NotFoundException();
+    }
+
+    await review.deleteOne();
+  }
 }

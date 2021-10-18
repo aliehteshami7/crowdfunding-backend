@@ -158,4 +158,19 @@ export class ProjectController {
   ): Promise<void> {
     await this.projectService.addReview(projectId, reviewDto, currentUser);
   }
+
+  @ApiBearerAuth()
+  @UseGuards(PermissionsGuard)
+  @Permissions(PermissionTag.ADMIN)
+  @UseGuards(JwtAuthGuard)
+  @Delete(':projectId/review/:reviewId')
+  @ApiOperation({
+    summary: "Remove a review from project, It's for admins",
+  })
+  async removeReview(
+    @Param('projectId') projectId: string,
+    @Param('reviewId') reviewId: string,
+  ): Promise<void> {
+    await this.projectService.removeReview(projectId, reviewId);
+  }
 }
