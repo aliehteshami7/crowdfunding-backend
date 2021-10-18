@@ -59,8 +59,8 @@ export class ProjectService {
       .findOne({ _id: projectId })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews')
-      .populate('reviews.reviewr');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
+
     if (!project) {
       throw new NotFoundException();
     }
@@ -80,8 +80,8 @@ export class ProjectService {
       })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews')
-      .populate('reviews.reviewr');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
+
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -96,8 +96,8 @@ export class ProjectService {
       })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews')
-      .populate('reviews.reviewr');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
+
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -110,8 +110,8 @@ export class ProjectService {
       .find({})
       .populate('owner')
       .populate('rewards')
-      .populate('reviews')
-      .populate('reviews.reviewr');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
+
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -124,8 +124,8 @@ export class ProjectService {
       .find({ owner: currentUser.id })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews')
-      .populate('reviews.reviewr');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
+
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -146,8 +146,8 @@ export class ProjectService {
       .findOneAndUpdate({ _id: projectId }, { $set: projectUpdateDto })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews')
-      .populate('reviews.reviewr');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
+
     if (!project) {
       throw new NotFoundException();
     }
@@ -190,8 +190,8 @@ export class ProjectService {
       .findById(projectId)
       .populate('owner')
       .populate('rewards')
-      .populate('reviews')
-      .populate('reviews.reviewr');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
+
     return plainToClass(ProjectRo, await project, {
       excludeExtraneousValues: true,
     });
