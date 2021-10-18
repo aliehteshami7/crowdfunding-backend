@@ -59,7 +59,8 @@ export class ProjectService {
       .findOne({ _id: projectId })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews');
+      .populate('reviews')
+      .populate('reviews.reviewr');
     if (!project) {
       throw new NotFoundException();
     }
@@ -79,7 +80,8 @@ export class ProjectService {
       })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews');
+      .populate('reviews')
+      .populate('reviews.reviewr');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -94,7 +96,8 @@ export class ProjectService {
       })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews');
+      .populate('reviews')
+      .populate('reviews.reviewr');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -107,7 +110,8 @@ export class ProjectService {
       .find({})
       .populate('owner')
       .populate('rewards')
-      .populate('reviews');
+      .populate('reviews')
+      .populate('reviews.reviewr');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -120,7 +124,8 @@ export class ProjectService {
       .find({ owner: currentUser.id })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews');
+      .populate('reviews')
+      .populate('reviews.reviewr');
     return plainToClass(
       ProjectsRo,
       { projects },
@@ -141,7 +146,8 @@ export class ProjectService {
       .findOneAndUpdate({ _id: projectId }, { $set: projectUpdateDto })
       .populate('owner')
       .populate('rewards')
-      .populate('reviews');
+      .populate('reviews')
+      .populate('reviews.reviewr');
     if (!project) {
       throw new NotFoundException();
     }
@@ -184,7 +190,8 @@ export class ProjectService {
       .findById(projectId)
       .populate('owner')
       .populate('rewards')
-      .populate('reviews');
+      .populate('reviews')
+      .populate('reviews.reviewr');
     return plainToClass(ProjectRo, await project, {
       excludeExtraneousValues: true,
     });
@@ -216,7 +223,7 @@ export class ProjectService {
 
     const project = await this.projectModel
       .findById(projectId)
-      .populate('reviews');
+      .populate({ path: 'reviews', populate: { path: 'reviewer' } });
 
     if (!project) {
       throw new NotFoundException();
@@ -236,18 +243,18 @@ export class ProjectService {
         text: reviewDto.text,
         reviewer: currentUser,
       });
+      await review.save();
+      await project.updateOne({
+        $push: {
+          reviews: {
+            ...review,
+          },
+        },
+      });
     } else {
       review.score = reviewDto.score;
       review.text = reviewDto.text;
+      await review.save();
     }
-
-    await review.save();
-    await project.update({
-      $push: {
-        reviews: {
-          ...review,
-        },
-      },
-    });
   }
 }
