@@ -126,7 +126,7 @@ export class ProjectController {
 
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
-  @Post(':projectId/addReward')
+  @Post(':projectId/reward')
   @ApiOperation({
     summary: 'Add a reward to a project, user should be admin or owner',
   })
