@@ -269,8 +269,6 @@ export class ProjectService {
       .findById(projectId)
       .populate('reviews');
 
-    console.log(JSON.stringify(project.reviews, null, 2));
-
     const review = project.reviews.find((review) => review._id == reviewId);
 
     if (!review) {
